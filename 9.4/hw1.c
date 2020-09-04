@@ -1,44 +1,46 @@
 /*
  * @Author: PlanC
  * @Date: 2020-09-04 17:28:50
- * @LastEditTime: 2020-09-04 17:58:26
+ * @LastEditTime: 2020-09-04 18:22:17
  * @FilePath: \Practical-Training-Neusoft-Tianjin\9.4\hw1.c
  */
 
 #include <stdio.h>
 
-float max(float num1, float num2) {
-    return (num1 > num2) ? num1 : num2;
+float max(float *num) {
+    int i = 0;
+    int flag = 0;
+    float max = 0;
+    for (i = 0; i < 3; i++) {
+        if (max < num[i]) {
+            max = num[i];
+            flag = i;
+        }
+    }
+    num[flag] = 0;
+    return max;
 }
 
-float min(float num1, float num2) {
-    return (num1 < num2) ? num1 : num2;
-}
-
-int validate(float edge1, float edge2, float edge3) {
-    float maxedge = max(max(edge1, edge2), max(edge2, edge3));
-    float minedge1 = min(edge1, edge2);
-    float minedge2 = min(edge2, edge3);
-    if (minedge1 * minedge1 + minedge2 * minedge2 > maxedge * maxedge) {
+int validate(float *num) {
+    float maxEdge = max(num);
+    if (num[0] * num[0] + num[1] * num[1] + num[2] * num[2] > maxEdge * maxEdge) {
         printf("acute");
     }
-    if (minedge1 * minedge1 + minedge2 * minedge2 == maxedge * maxedge) {
+    if (num[0] * num[0] + num[1] * num[1] + num[2] * num[2] == maxEdge * maxEdge) {
         printf("right");
     }
-    if (minedge1 * minedge1 + minedge2 * minedge2 < maxedge * maxedge) {
+    if (num[0] * num[0] + num[1] * num[1] + num[2] * num[2] < maxEdge * maxEdge) {
         printf("obtuse");
     }
 }
 
 int main() {
-    float edge1 = 0.0;
-    float edge2 = 0.0;
-    float edge3 = 0.0;
-    scanf("%f %f %f", &edge1, &edge2, &edge3);
-    printf("triangle with %f %f %f, ", edge1, edge2, edge3);
-    if ((edge1 + edge2 > edge3) && (edge1 + edge3 > edge2) & (edge2 + edge3 > edge1)) {
+    float edge[2] = {0.0};
+    scanf("%f %f %f", &edge[0], &edge[1], &edge[2]);
+    printf("triangle with %f %f %f, ", edge[0], edge[1], edge[2]);
+    if ((edge[0] + edge[1] > edge[2]) && (edge[0] + edge[2] > edge[1]) & (edge[1] + edge[2] > edge[0])) {
         printf("is a ");
-        validate(edge1, edge2, edge3);
+        validate(edge);
         printf(" triangle.\n");
     }
     else {
