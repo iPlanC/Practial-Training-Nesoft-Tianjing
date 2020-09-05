@@ -1,7 +1,7 @@
 /*
  * @Author: PlanC
  * @Date: 2020-09-05 09:02:38
- * @LastEditTime: 2020-09-05 09:25:59
+ * @LastEditTime: 2020-09-05 09:51:27
  * @FilePath: \Practical-Training-Neusoft-Tianjin\9.5\1.c
  */
 
@@ -15,13 +15,16 @@ int main() {
         scanf("%d %d", &a, &b);
         printf("a = %d, b = %d, ", a, b);
         if (a > 10 && b > 10) {
-            printf("all over 10.\n");
+            printf("all over 10, ");
         }
         if (a > 10 || b > 10) {
-            printf("NOT all over 10.\n");
+            printf("NOT all over 10, ");
+        }
+        if (!(a == b)) {
+            printf("a != b.\n");
         }
         else {
-            printf("all NOT over 10.\n");
+            printf("a == b.\n");
         }
     }
     return 0;
