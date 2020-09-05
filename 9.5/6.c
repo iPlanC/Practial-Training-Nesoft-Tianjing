@@ -1,7 +1,7 @@
 /*
  * @Author: PlanC
  * @Date: 2020-09-05 15:42:18
- * @LastEditTime: 2020-09-05 16:00:22
+ * @LastEditTime: 2020-09-05 16:02:52
  * @FilePath: \Practical-Training-Neusoft-Tianjin\9.5\6.c
  */
 
@@ -19,7 +19,7 @@ int main() {
 
     for (i = 0; i < 10; i++) {
         for (j = 0; j < 10; j++) {
-            printf("array[%d][%d] = %d, ", i, j, array[i][j]);
+            printf("array[%d][%d] = %d,\t", i, j, array[i][j]);
         }
         printf("\n");
     }
