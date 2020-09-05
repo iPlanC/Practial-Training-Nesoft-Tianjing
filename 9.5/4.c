@@ -1,0 +1,19 @@
+/*
+ * @Author: PlanC
+ * @Date: 2020-09-05 14:21:22
+ * @LastEditTime: 2020-09-05 14:26:36
+ * @FilePath: \Practical-Training-Neusoft-Tianjin\9.5\4.c
+ */
+
+#include <stdio.h>
+
+int main() {
+    int a = 0;
+    int b = 0;
+    while (1) {
+        printf("input a and b\n");
+        scanf("%d %d", &a, &b);
+        printf("a = %d b = %d\n", a << 2, b >> 2);
+    }
+    return 0;
+}
