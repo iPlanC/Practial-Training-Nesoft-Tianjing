@@ -1,2 +1,19 @@
+# c
 *.exe
 *.out
+
+# uvision
+*.axf
+*.bak
+*.crf
+*.dep
+*.d
+*.htm
+*.lnp
+*.lst
+*.map
+*.o
+*.planc
+*.plg
+*.sct
+*.uvopt
