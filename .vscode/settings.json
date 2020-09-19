@@ -1,0 +1,19 @@
+{
+    "[jsonc]": {
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.suggest.insertMode": "replace"
+    },
+    "files.exclude": {
+        "**/*.axf": true,
+        "**/*.crf": true,
+        "**/*.d": true,
+        "**/*.htm": true,
+        "**/*.lnp": true,
+        "**/*.lst": true,
+        "**/*.map": true,
+        "**/*.o": true,
+        "**/*.sct": true,
+    }
+}
