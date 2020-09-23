@@ -16,20 +16,20 @@ int main() {
 		// delay(0x5FFFF);
 		// GPIOA->ODR |= (0x1 << 4) | (0x1 << 3) | (0x1 << 2) | (0x1 << 1);
 		// delay(0x5FFFF);
-		GPIOA->ODR &= ~((0x1 << 4));
 		GPIOA->ODR |= (0x1 << 1);
 		delay(0xFFFFF);
-		
 		GPIOA->ODR &= ~((0x1 << 1));
+		
 		GPIOA->ODR |= (0x1 << 2);
 		delay(0xFFFFF);
-		
 		GPIOA->ODR &= ~((0x1 << 2));
+		
 		GPIOA->ODR |= (0x1 << 3);
 		delay(0xFFFFF);
-		
 		GPIOA->ODR &= ~((0x1 << 3));
+		
 		GPIOA->ODR |= (0x1 << 4);
 		delay(0xFFFFF);
+		GPIOA->ODR &= ~((0x1 << 4));
 	}
 }
