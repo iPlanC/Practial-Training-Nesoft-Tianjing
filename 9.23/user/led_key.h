@@ -8,7 +8,6 @@
 
 void delay(unsigned int loop);
 void LED_init(void);
-void KEY_init(void);
 void RCC_init(void);
 int KEY_Scan(GPIO_TypeDef* GPIOx, u16 GIO_Pin);
 

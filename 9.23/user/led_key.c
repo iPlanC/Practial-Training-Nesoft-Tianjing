@@ -7,21 +7,11 @@ void delay(unsigned int loop) {
 void LED_init(void) {
 	GPIO_InitTypeDef GPIO_A_LED_init;
 	
-	GPIO_A_LED_init.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4;
+	GPIO_A_LED_init.GPIO_Pin = GPIO_Pin_1;
 	GPIO_A_LED_init.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_A_LED_init.GPIO_Mode = GPIO_Mode_Out_PP;
+	GPIO_A_LED_init.GPIO_Mode = GPIO_Mode_IN_FLOATING;
 	
 	GPIO_Init(GPIOA, &GPIO_A_LED_init);
-}
-
-void KEY_init(void) {
-	GPIO_InitTypeDef GPIO_A_KEY_init;
-	
-	GPIO_A_KEY_init.GPIO_Pin = GPIO_Pin_0;
-	GPIO_A_KEY_init.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_A_KEY_init.GPIO_Mode = GPIO_Mode_IPU;
-	
-	GPIO_Init(GPIOA, &GPIO_A_KEY_init);
 }
 
 void RCC_init(void) {
