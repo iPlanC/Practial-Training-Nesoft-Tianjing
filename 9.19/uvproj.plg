@@ -7,3 +7,12 @@ C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\9.19\uvproj.u
 Project File Date:  09/23/2020
 
 <h2>Output:</h2>
+Build target 'Target 1'
+linking...
+Program Size: Code=1060 RO-data=268 RW-data=20 ZI-data=1636  
+".\uvproj.axf" - 0 Errors, 0 Warning(s).
+Load "C:\\Users\\PlanC\\Documents\\Github\\Practical-Training-Neusoft-Tianjin\\9.19\\uvproj.axf" 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
