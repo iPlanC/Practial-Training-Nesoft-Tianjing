@@ -19,6 +19,7 @@ void RCC_init(void);
 void KEY_init(void);
 void PIR_init(void);
 void BEEP_init(void);
+void RELAY_init(void);
 int KEY_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x);
 int PIR_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x);
 

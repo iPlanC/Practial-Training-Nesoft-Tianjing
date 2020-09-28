@@ -12,7 +12,7 @@ int main(void) {
 			while (KEY_Scan(GPIOA, GPIO_Pin_0) != KEY_ON) {
 				LED_TOGGLE;
 				BEEP_TOGGLE;
-				delay(0xFFFFF);
+				delay(0xFFFF);
 			}
 			GPIO_WriteBit(GPIOA, GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4, Bit_RESET);
 		}
