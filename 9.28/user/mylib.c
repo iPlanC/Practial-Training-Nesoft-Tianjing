@@ -64,7 +64,36 @@ void MQ_init(void) {
 	GPIO_Init(GPIOA, &GPIO_A_MQ_init);
 }
 
+void EXTI_init(void) {
+	NVIC_InitTypeDef NVIC_init;
+	GPIO_InitTypeDef GPIO_init;
+	EXTI_InitTypeDef EXTI_InitStructure;
+	
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+	NVIC_init.NVIC_IRQChannel = EXTI0_IRQn;
+	NVIC_init.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_init.NVIC_IRQChannelSubPriority = 1;
+	NVIC_init.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_init);
+	
+	NVIC_init.NVIC_IRQChannel = EXTI9_5_IRQn;
+	NVIC_Init(&NVIC_init);
+	
+	GPIO_init.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_5;
+	GPIO_init.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_init.GPIO_Mode = GPIO_Mode_IPU;
+	GPIO_Init(GPIOA, &GPIO_init);
+	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource0 | GPIO_PinSource5);
+	
+	EXTI_InitStructure.EXTI_Line = EXTI_Line0 | EXTI_Line5;
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
+	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+	EXTI_Init(&EXTI_InitStructure);
+}
+
 void RCC_init(void) {
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
 }
@@ -96,4 +125,18 @@ int MQ_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
 		return KEY_ON;
 	}
 	return KEY_OFF;
+}
+
+void EXTI0_IRQHandler(void) {
+	if (EXTI_GetITStatus(EXTI_Line0) == SET) {
+		GPIOA->ODR ^= GPIO_Pin_1;
+		EXTI_ClearITPendingBit(EXTI_Line0);
+	}
+}
+
+void EXTI9_5_IRQHandler(void) {
+	if (EXTI_GetITStatus(EXTI_Line5) == SET) {
+		GPIOA->ODR ^= GPIO_Pin_2;
+		EXTI_ClearITPendingBit(EXTI_Line5);
+	}
 }
