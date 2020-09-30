@@ -1,7 +1,12 @@
 #include "mylib.h"
 
-void delay(unsigned int loop) {
-	while (loop--);
+unsigned int timer;
+
+void delay(unsigned int us) {
+	timer = us;
+	SysTick->CTRL |= (1 << 0);
+	while (timer);
+	SysTick->CTRL &= ~(1 << 0);
 }
 
 void LED_init(void) {
@@ -96,6 +101,11 @@ void RCC_init(void) {
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+}
+
+void SysTick_init(void) {
+	while (SysTick_Config(72));
+	SysTick->CTRL &= ~(1 << 0);
 }
 
 int KEY_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {

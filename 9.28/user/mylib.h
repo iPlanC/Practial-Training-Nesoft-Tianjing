@@ -13,7 +13,7 @@
 #define LED_TOGGLE4    (GPIOA->ODR ^= GPIO_Pin_4)
 #define BEEP_TOGGLE    (GPIOB->ODR ^= GPIO_Pin_8)
 
-void delay             (unsigned int loop);
+void delay             (unsigned int us);
 void LED_init          (void);
 void RCC_init          (void);
 void KEY_init          (void);
@@ -22,6 +22,7 @@ void BEEP_init         (void);
 void RELAY_init        (void);
 void MQ_init           (void);
 void EXTI_init         (void);
+void SysTick_init      (void);
 int KEY_Scan           (GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x);
 int PIR_Scan           (GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x);
 int MQ_Scan            (GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x);
