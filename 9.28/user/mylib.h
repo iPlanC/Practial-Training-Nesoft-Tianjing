@@ -23,6 +23,8 @@ void RELAY_init        (void);
 void MQ_init           (void);
 void EXTI_init         (void);
 void SysTick_init      (void);
+void IWDG_init         (void);
+void WWDG_init         (unsigned char counter, unsigned char value, unsigned int prescaler);
 int KEY_Scan           (GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x);
 int PIR_Scan           (GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x);
 int MQ_Scan            (GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x);

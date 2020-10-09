@@ -1,6 +1,7 @@
 #include "mylib.h"
 
 unsigned int timer;
+unsigned char WWDG_CNT;
 
 void delay(unsigned int us) {
 	timer = us;
@@ -98,6 +99,7 @@ void EXTI_init(void) {
 }
 
 void RCC_init(void) {
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_WWDG, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
@@ -106,6 +108,39 @@ void RCC_init(void) {
 void SysTick_init(void) {
 	while (SysTick_Config(72));
 	SysTick->CTRL &= ~(1 << 0);
+}
+
+void IWDG_init(void) {
+	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
+	IWDG_SetPrescaler(IWDG_Prescaler_16);
+	IWDG_SetReload(2500);
+	IWDG_ReloadCounter();
+	IWDG_WriteAccessCmd(IWDG_WriteAccess_Disable);
+	IWDG_Enable();
+}
+
+void WWDG_NVIC_init() {
+	NVIC_InitTypeDef NVIC_init;
+	
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+	NVIC_init.NVIC_IRQChannel = WWDG_IRQn;
+	NVIC_init.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_init.NVIC_IRQChannelSubPriority = 1;
+	NVIC_init.NVIC_IRQChannelCmd = ENABLE;
+	
+	NVIC_Init(&NVIC_init);
+}
+
+void WWDG_init(unsigned char counter, unsigned char value, unsigned int prescaler) {
+	WWDG_CNT = counter;
+	WWDG_SetWindowValue(value);
+	WWDG_SetPrescaler(prescaler);
+	
+	WWDG_NVIC_init();
+	WWDG_ClearFlag();
+	WWDG_EnableIT();
+	
+	WWDG_Enable(counter);
 }
 
 int KEY_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
@@ -149,4 +184,10 @@ void EXTI9_5_IRQHandler(void) {
 		GPIOA->ODR ^= GPIO_Pin_2;
 		EXTI_ClearITPendingBit(EXTI_Line5);
 	}
+}
+
+void WWDG_IRQHandler(void) {
+	WWDG_ClearFlag();
+	// while (WWDG_GetFlagStatus() == SET);
+	WWDG_SetCounter(WWDG_CNT);
 }
