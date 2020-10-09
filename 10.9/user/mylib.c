@@ -147,8 +147,9 @@ void USART_init(void) {
 void USART_SendString(USART_TypeDef* USARTx, char* str, int length) {
 	int i = 0;
 	for (i = 0; i < length; i++) {
-		USART_SendData(USARTx, str[i]);
 		while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+		USART_SendData(USARTx, str[i]);
+		while(USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
 	}
 }
 
