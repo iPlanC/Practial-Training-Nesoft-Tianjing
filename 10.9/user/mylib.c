@@ -1,5 +1,7 @@
 #include "mylib.h"
 
+unsigned char *str;
+unsigned int i;
 unsigned int timer;
 unsigned char WWDG_CNT;
 
@@ -123,6 +125,14 @@ void IWDG_init(void) {
 void USART_init(void) {
 	GPIO_InitTypeDef GPIO_A_USART_init;
 	USART_InitTypeDef USART_init;
+	NVIC_InitTypeDef NVIC_init;
+	
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+	NVIC_init.NVIC_IRQChannel = USART1_IRQn;
+	NVIC_init.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_init.NVIC_IRQChannelSubPriority = 1;
+	NVIC_init.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_init);
 	
 	GPIO_A_USART_init.GPIO_Pin = GPIO_Pin_9;
 	GPIO_A_USART_init.GPIO_Speed = GPIO_Speed_50MHz;
@@ -139,9 +149,10 @@ void USART_init(void) {
 	USART_init.USART_Parity = USART_Parity_No;
 	USART_init.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
 	USART_init.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
-	
 	USART_Init(USART1, &USART_init);
+	
 	USART_Cmd(USART1, ENABLE);
+	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 }
 
 void USART_SendString(USART_TypeDef* USARTx, char* str, int length) {
@@ -150,6 +161,14 @@ void USART_SendString(USART_TypeDef* USARTx, char* str, int length) {
 		while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
 		USART_SendData(USARTx, str[i]);
 		while(USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
+	}
+}
+
+void USART_ReceiveString(USART_TypeDef* USARTx, char* str, int length) {
+	int i = 0;
+	for (i = 0; i < length; i++) {
+		while(USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
+		str[i] = (char)USART_ReceiveData(USART1);
 	}
 }
 
@@ -224,4 +243,38 @@ void WWDG_IRQHandler(void) {
 	WWDG_ClearFlag();
 	// while (WWDG_GetFlagStatus() == SET);
 	WWDG_SetCounter(WWDG_CNT);
+}
+
+void USART1_IRQHandler(void) {
+	if (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET) {
+		unsigned char ch;
+		static int i = 1;
+		static int flag = 0;
+		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET) {
+			ch = USART_ReceiveData(USART1);
+			
+			if (ch == 0xFE) {
+				str[0] = 0xFE;
+				flag = 1;
+			}
+			if (ch != 0xFE && flag == 1) {
+				str[i++] = ch;
+				if (i == 5) {
+					flag = 0;
+					i = 1;
+					if (str[1] + str[2] == str[3] && str[4] == 0xFF) {
+						GPIOA->ODR |= (str[2] << str[1]);
+					}
+				}
+			}
+		}
+		USART_ClearITPendingBit(USART1, USART_IT_RXNE);
+	}
+}
+
+int fputc(int c, FILE *fp) {
+	while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+	USART_SendData(USART1, c);
+	while(USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
+	return 0;
 }
