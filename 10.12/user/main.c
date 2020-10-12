@@ -2,10 +2,9 @@
 
 int main(void) {
 	RCC_init();
-	LED_init();
 	USART_init();
-
+	
 	while (1) {
-		
+		//printf("Hello");
 	}
 }

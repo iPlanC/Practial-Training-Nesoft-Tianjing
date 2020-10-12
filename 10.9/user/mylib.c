@@ -268,7 +268,7 @@ void USART1_IRQHandler(void) {
 				}
 			}
 		}
-		USART_ClearITPendingBit(USART1, USART_IT_RXNE);
+		//USART_ClearITPendingBit(USART1, USART_IT_RXNE);
 	}
 }
 

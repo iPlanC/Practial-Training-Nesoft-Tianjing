@@ -28,7 +28,6 @@ void SysTick_init         (void);
 void IWDG_init            (void);
 void USART_init           (void);
 void USART_SendString     (USART_TypeDef* USARTx, char* str, int length);
-void USART_ReceiveString  (USART_TypeDef* USARTx, char* str, int length);
 void WWDG_init            (unsigned char counter, unsigned char value, unsigned int prescaler);
 int KEY_Scan              (GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x);
 int PIR_Scan              (GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x);
