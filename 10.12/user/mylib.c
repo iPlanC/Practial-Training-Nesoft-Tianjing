@@ -1,111 +1,73 @@
 #include "mylib.h"
 
-unsigned int i;
 unsigned int timer;
 unsigned char WWDG_CNT;
 
-void delay(unsigned int us) {
+void delayus(unsigned int us) {
 	timer = us;
 	SysTick->CTRL |= (1 << 0);
 	while (timer);
 	SysTick->CTRL &= ~(1 << 0);
 }
 
+void GPIO_init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x, GPIOSpeed_TypeDef GPIO_Speed, GPIOMode_TypeDef GPIO_Mode) {
+	GPIO_InitTypeDef GPIOA_init;
+	
+	GPIOA_init.GPIO_Pin = GPIO_Pin_x;
+	GPIOA_init.GPIO_Speed = GPIO_Speed;
+	GPIOA_init.GPIO_Mode = GPIO_Mode;
+	
+	GPIO_Init(GPIOx, &GPIOA_init);
+}
+
 void LED_init(void) {
-	GPIO_InitTypeDef GPIO_A_LED_init;
-	
-	GPIO_A_LED_init.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4;
-	GPIO_A_LED_init.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_A_LED_init.GPIO_Mode = GPIO_Mode_Out_PP;
-	
-	GPIO_Init(GPIOA, &GPIO_A_LED_init);
+	GPIO_init(GPIOA, GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4, GPIO_Speed_50MHz, GPIO_Mode_Out_PP);
 }
 
 void BEEP_init(void) {
-	GPIO_InitTypeDef GPIO_B_BEEP_init;
-	
-	GPIO_B_BEEP_init.GPIO_Pin = GPIO_Pin_8;
-	GPIO_B_BEEP_init.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_B_BEEP_init.GPIO_Mode = GPIO_Mode_Out_PP;
-	
-	GPIO_Init(GPIOB, &GPIO_B_BEEP_init);
+	GPIO_init(GPIOA, GPIO_Pin_8, GPIO_Speed_50MHz, GPIO_Mode_Out_PP);
 }
 
 void KEY_init(void) {
-	GPIO_InitTypeDef GPIO_A_LED_init;
-	
-	GPIO_A_LED_init.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_5;
-	GPIO_A_LED_init.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_A_LED_init.GPIO_Mode = GPIO_Mode_IPU;
-	
-	GPIO_Init(GPIOA, &GPIO_A_LED_init);
+	GPIO_init(GPIOA, GPIO_Pin_0 | GPIO_Pin_5, GPIO_Speed_50MHz, GPIO_Mode_IPU);
 }
 
 void PIR_init(void) {
-	GPIO_InitTypeDef GPIO_A_PIR_init;
-	
-	GPIO_A_PIR_init.GPIO_Pin = GPIO_Pin_6;
-	GPIO_A_PIR_init.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_A_PIR_init.GPIO_Mode = GPIO_Mode_IPD;
-	
-	GPIO_Init(GPIOA, &GPIO_A_PIR_init);
+	GPIO_init(GPIOA, GPIO_Pin_6, GPIO_Speed_50MHz, GPIO_Mode_IPD);
 }
 
 void RELAY_init(void) {
-	GPIO_InitTypeDef GPIO_A_RELAY_init;
-	
-	GPIO_A_RELAY_init.GPIO_Pin = GPIO_Pin_7;
-	GPIO_A_RELAY_init.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_A_RELAY_init.GPIO_Mode = GPIO_Mode_Out_PP;
-	
-	GPIO_Init(GPIOA, &GPIO_A_RELAY_init);
+	GPIO_init(GPIOA, GPIO_Pin_7, GPIO_Speed_50MHz, GPIO_Mode_Out_PP);
 }
 
 void MQ_init(void) {
-	GPIO_InitTypeDef GPIO_A_MQ_init;
-	
-	GPIO_A_MQ_init.GPIO_Pin = GPIO_Pin_8;
-	GPIO_A_MQ_init.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_A_MQ_init.GPIO_Mode = GPIO_Mode_IPD;
-	
-	GPIO_Init(GPIOA, &GPIO_A_MQ_init);
-}
-
-void EXTI_init(void) {
-	NVIC_InitTypeDef NVIC_init;
-	GPIO_InitTypeDef GPIO_init;
-	EXTI_InitTypeDef EXTI_InitStructure;
-	
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
-	NVIC_init.NVIC_IRQChannel = EXTI0_IRQn;
-	NVIC_init.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_init.NVIC_IRQChannelSubPriority = 1;
-	NVIC_init.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_init);
-	
-	NVIC_init.NVIC_IRQChannel = EXTI9_5_IRQn;
-	NVIC_Init(&NVIC_init);
-	
-	GPIO_init.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_5;
-	GPIO_init.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_init.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_Init(GPIOA, &GPIO_init);
-	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource0 | GPIO_PinSource5);
-	
-	EXTI_InitStructure.EXTI_Line = EXTI_Line0 | EXTI_Line5;
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
-	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-	EXTI_Init(&EXTI_InitStructure);
+	GPIO_init(GPIOA, GPIO_Pin_8, GPIO_Speed_50MHz, GPIO_Mode_IPD);
 }
 
 void RCC_init(void) {
+	#ifdef USE_WWDG
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_WWDG, ENABLE);
+	#endif
+	
+	#ifdef USE_USART2
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+	#endif
+	
+	#ifdef USE_AFIO
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
+	#endif
+	
+	#ifdef USE_GPIOA
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+	#endif
+	
+	#ifdef USE_GPIOB
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+	#endif
+	
+	#ifdef USE_USART1
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
+	#endif
 }
 
 void SysTick_init(void) {
@@ -123,7 +85,6 @@ void IWDG_init(void) {
 }
 
 void USART_init(void) {
-	GPIO_InitTypeDef GPIO_A_USART_init;
 	USART_InitTypeDef USART_init;
 	NVIC_InitTypeDef NVIC_init;
 	
@@ -134,14 +95,8 @@ void USART_init(void) {
 	NVIC_init.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_init);
 	
-	GPIO_A_USART_init.GPIO_Pin = GPIO_Pin_9;
-	GPIO_A_USART_init.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_A_USART_init.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_Init(GPIOA, &GPIO_A_USART_init);
-	
-	GPIO_A_USART_init.GPIO_Pin = GPIO_Pin_3;
-	GPIO_A_USART_init.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-	GPIO_Init(GPIOA, &GPIO_A_USART_init);
+	GPIO_init(GPIOA, GPIO_Pin_7, GPIO_Speed_50MHz, GPIO_Mode_AF_PP);
+	GPIO_init(GPIOA, GPIO_Pin_7, GPIO_Speed_50MHz, GPIO_Mode_IN_FLOATING);
 	
 	USART_init.USART_BaudRate = 115200;
 	USART_init.USART_WordLength = USART_WordLength_8b;
@@ -196,7 +151,7 @@ void WWDG_init(unsigned char counter, unsigned char value, unsigned int prescale
 int KEY_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
 	int i = 0;
 	if (GPIO_ReadInputDataBit(GPIOx, GPIO_Pin_x) == 0x0) {
-		delay(0xF);
+		delayus(0xF);
 		while ((GPIO_ReadInputDataBit(GPIOx, GPIO_Pin_x) == 0x0) && (i < 0xFFFFF)) i++;
 		if (i < 0xFFFFF) {
 			return KEY_ON;
@@ -209,17 +164,11 @@ int KEY_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
 }
 
 int PIR_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
-	if (GPIO_ReadInputDataBit(GPIOx, GPIO_Pin_x) != 0x0) {
-		return KEY_ON;
-	}
-	return KEY_OFF;
+	return KEY_Scan(GPIOx, GPIO_Pin_x);
 }
 
 int MQ_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
-	if (GPIO_ReadInputDataBit(GPIOx, GPIO_Pin_x) != 0x0) {
-		return KEY_ON;
-	}
-	return KEY_OFF;
+	return KEY_Scan(GPIOx, GPIO_Pin_x);
 }
 
 void EXTI0_IRQHandler(void) {
@@ -238,7 +187,6 @@ void EXTI9_5_IRQHandler(void) {
 
 void WWDG_IRQHandler(void) {
 	WWDG_ClearFlag();
-	// while (WWDG_GetFlagStatus() == SET);
 	WWDG_SetCounter(WWDG_CNT);
 }
 

@@ -5,6 +5,11 @@
 #include <stdio.h>
 #include <string.h>
 
+#define USE_AFIO
+#define USE_GPIOA
+#define USE_USART1
+#define USE_USART2
+
 #define KEY_OFF           0
 #define KEY_ON            1
 #define KEY_LONG          2
@@ -15,7 +20,8 @@
 #define LED_TOGGLE4       (GPIOA->ODR ^= GPIO_Pin_4)
 #define BEEP_TOGGLE       (GPIOB->ODR ^= GPIO_Pin_8)
 
-void delay                (unsigned int us);
+void delayus              (unsigned int us);
+void GPIO_init            (GPIO_TypeDef* GPIOx, u16 GPIO_Pin, GPIOSpeed_TypeDef GPIO_Speed, GPIOMode_TypeDef GPIO_Mode);
 void LED_init             (void);
 void RCC_init             (void);
 void KEY_init             (void);
@@ -23,7 +29,6 @@ void PIR_init             (void);
 void BEEP_init            (void);
 void RELAY_init           (void);
 void MQ_init              (void);
-void EXTI_init            (void);
 void SysTick_init         (void);
 void IWDG_init            (void);
 void USART_init           (void);
