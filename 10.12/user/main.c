@@ -1,22 +1,17 @@
 #include "mylib.h"
 
-extern unsigned char arr[100];
+#define V25         (float)1775    // 0x06EF
+#define AVG_SLOPE   (float)  58    // 0x003A
+
+extern uint16_t data;
 
 int main(void) {
-	int i = 0;
-	
 	RCC_init();
-	SysTick_init();
-	LED_init();
+	ADC_init();
 	USART_init();
-	DMA_init();
-	
-	for (i = 0; i < 100; i++) {
-		arr[i] = 'a';
-	}
 	
 	while (1) {
-		LED_TOGGLE;
-		delayus(100000);
+		printf("Vsence: %d\t", data);
+		printf("Temp: %f\n", ((V25 - data) / AVG_SLOPE) + 25);
 	}
 }

@@ -5,9 +5,13 @@
 #include <stdio.h>
 #include <string.h>
 
+//#define USE_WWDG
+//#define USE_USART2
 #define USE_AFIO
 #define USE_GPIOA
-#define USE_USART2
+//#define USE_GPIOB
+#define USE_USART1
+#define USE_ADC1
 #define USE_DMA
 
 #define KEY_OFF           0
@@ -31,12 +35,8 @@ void BEEP_init            (void);
 void RELAY_init           (void);
 void MQ_init              (void);
 void SysTick_init         (void);
-void IWDG_init            (void);
+void ADC_init             (void);
 void USART_init           (void);
-void DMA_init             (void);
-
-void USART_SendString     (USART_TypeDef* USARTx, char* str, int length);
-void WWDG_init            (unsigned char counter, unsigned char value, unsigned int prescaler);
 
 int KEY_Scan              (GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x);
 int PIR_Scan              (GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x);

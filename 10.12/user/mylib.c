@@ -2,7 +2,7 @@
 
 unsigned int timer;
 unsigned char WWDG_CNT;
-unsigned char arr[100];
+uint16_t data;
 
 void delayus(unsigned int us) {
 	timer = us;
@@ -70,23 +70,54 @@ void RCC_init(void) {
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 	#endif
 	
+	#ifdef USE_ADC1
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+	RCC_ADCCLKConfig(RCC_PCLK2_Div8);
+	#endif
+	
 	#ifdef USE_DMA
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 	#endif
 }
 
-void SysTick_init(void) {
-	while (SysTick_Config(72));
-	SysTick->CTRL &= ~(1 << 0);
-}
-
-void IWDG_init(void) {
-	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
-	IWDG_SetPrescaler(IWDG_Prescaler_16);
-	IWDG_SetReload(2500);
-	IWDG_ReloadCounter();
-	IWDG_WriteAccessCmd(IWDG_WriteAccess_Disable);
-	IWDG_Enable();
+void ADC_init() {
+	DMA_InitTypeDef DMA_InitStructure;
+	ADC_InitTypeDef ADC_InitStructure;
+	
+	DMA_InitStructure.DMA_PeripheralBaseAddr = ADC1_BASE + 0x4C;
+	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&data;
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
+	DMA_InitStructure.DMA_BufferSize = 12;
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable;
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+	DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
+	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+	
+	DMA_Init(DMA1_Channel1, &DMA_InitStructure);
+	DMA_Cmd(DMA1_Channel1, ENABLE);
+	
+	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
+	ADC_InitStructure.ADC_ScanConvMode = DISABLE;
+	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
+	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
+	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+	ADC_InitStructure.ADC_NbrOfChannel = 1;
+	
+	ADC_Init(ADC1, &ADC_InitStructure);
+	
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_16, 1, ADC_SampleTime_55Cycles5);
+	ADC_TempSensorVrefintCmd(ENABLE);
+	ADC_DMACmd(ADC1, ENABLE);
+	ADC_Cmd(ADC1, ENABLE);
+	ADC_ResetCalibration(ADC1);
+	while (ADC_GetResetCalibrationStatus(ADC2) == SET);
+	ADC_StartCalibration(ADC1);
+	while (ADC_GetCalibrationStatus(ADC2) == SET);
+	
+	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
 }
 
 void USART_init(void) {
@@ -122,57 +153,9 @@ void USART_init(void) {
 //	USART_Cmd(USART2, ENABLE);
 }
 
-void DMA_init(void) {
-	DMA_InitTypeDef DMA_InitStructure;
-	
-	DMA_InitStructure.DMA_PeripheralBaseAddr = USART1_BASE + 0x04;
-	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)arr;
-	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
-	DMA_InitStructure.DMA_BufferSize = 100;
-	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
-	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
-	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
-	DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
-	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-	
-	USART_DMACmd(USART1, USART_DMAReq_Tx, ENABLE);
-	DMA_Init(DMA1_Channel4, &DMA_InitStructure);
-	DMA_Cmd(DMA1_Channel4, ENABLE);
-}
-
-void USART_SendString(USART_TypeDef* USARTx, char* str, int length) {
-	int i = 0;
-	for (i = 0; i < length; i++) {
-		while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
-		USART_SendData(USARTx, str[i]);
-		while(USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
-	}
-}
-
-void WWDG_NVIC_init() {
-	NVIC_InitTypeDef NVIC_init;
-	
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
-	NVIC_init.NVIC_IRQChannel = WWDG_IRQn;
-	NVIC_init.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_init.NVIC_IRQChannelSubPriority = 1;
-	NVIC_init.NVIC_IRQChannelCmd = ENABLE;
-	
-	NVIC_Init(&NVIC_init);
-}
-
-void WWDG_init(unsigned char counter, unsigned char value, unsigned int prescaler) {
-	WWDG_CNT = counter;
-	WWDG_SetWindowValue(value);
-	WWDG_SetPrescaler(prescaler);
-	
-	WWDG_NVIC_init();
-	WWDG_ClearFlag();
-	WWDG_EnableIT();
-	
-	WWDG_Enable(counter);
+void SysTick_init(void) {
+	while (SysTick_Config(72));
+	SysTick->CTRL &= ~(1 << 0);
 }
 
 int KEY_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
@@ -196,51 +179,6 @@ int PIR_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
 
 int MQ_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
 	return KEY_Scan(GPIOx, GPIO_Pin_x);
-}
-
-void EXTI0_IRQHandler(void) {
-	if (EXTI_GetITStatus(EXTI_Line0) == SET) {
-		GPIOA->ODR ^= GPIO_Pin_1;
-		EXTI_ClearITPendingBit(EXTI_Line0);
-	}
-}
-
-void EXTI9_5_IRQHandler(void) {
-	if (EXTI_GetITStatus(EXTI_Line5) == SET) {
-		GPIOA->ODR ^= GPIO_Pin_2;
-		EXTI_ClearITPendingBit(EXTI_Line5);
-	}
-}
-
-void WWDG_IRQHandler(void) {
-	WWDG_ClearFlag();
-	WWDG_SetCounter(WWDG_CNT);
-}
-
-void USART2_IRQHandler(void) {
-	unsigned char ch;
-	static int i = 1;
-	static int flag = 0;
-	static unsigned char str[] = {0, 0, 0, 0, 0, 0, 0};
-	while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == SET) {
-		ch = USART_ReceiveData(USART2);
-		
-		if (ch == 0xAA) {
-			str[0] = 0xAA;
-			flag = 1;
-		}
-		if (ch != 0xAA && flag == 1) {
-			str[i++] = ch;
-			if (i == 7) {
-				flag = 0;
-				i = 1;
-				if ((str[1] + str[2] + str[3] + str[4] == str[5]) && (str[6] == 0xFF)) {
-					printf("%fv, ", (double)(((double)str[1] * 256 + (double)str[2]) / 1024 * 5));
-					printf("0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x.\n", str[0], str[1], str[2], str[3], str[4], str[5], str[6]);
-				}
-			}
-		}
-	}
 }
 
 int fputc(int c, FILE *fp) {
