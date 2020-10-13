@@ -2,6 +2,7 @@
 
 unsigned int timer;
 unsigned char WWDG_CNT;
+unsigned char arr[100];
 
 void delayus(unsigned int us) {
 	timer = us;
@@ -68,6 +69,10 @@ void RCC_init(void) {
 	#ifdef USE_USART1
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 	#endif
+	
+	#ifdef USE_DMA
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
+	#endif
 }
 
 void SysTick_init(void) {
@@ -86,17 +91,19 @@ void IWDG_init(void) {
 
 void USART_init(void) {
 	USART_InitTypeDef USART_init;
-	NVIC_InitTypeDef NVIC_init;
+//	NVIC_InitTypeDef NVIC_init;
 	
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
-	NVIC_init.NVIC_IRQChannel = USART2_IRQn;
-	NVIC_init.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_init.NVIC_IRQChannelSubPriority = 2;
-	NVIC_init.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_init);
+//	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+//	NVIC_init.NVIC_IRQChannel = USART2_IRQn;
+//	NVIC_init.NVIC_IRQChannelPreemptionPriority = 0;
+//	NVIC_init.NVIC_IRQChannelSubPriority = 2;
+//	NVIC_init.NVIC_IRQChannelCmd = ENABLE;
+//	NVIC_Init(&NVIC_init);
 	
-	GPIO_init(GPIOA, GPIO_Pin_7, GPIO_Speed_50MHz, GPIO_Mode_AF_PP);
-	GPIO_init(GPIOA, GPIO_Pin_7, GPIO_Speed_50MHz, GPIO_Mode_IN_FLOATING);
+	GPIO_init(GPIOA, GPIO_Pin_9, GPIO_Speed_50MHz, GPIO_Mode_AF_PP);
+//	GPIO_init(GPIOA, GPIO_Pin_10, GPIO_Speed_50MHz, GPIO_Mode_IN_FLOATING);
+//	GPIO_init(GPIOA, GPIO_Pin_2, GPIO_Speed_50MHz, GPIO_Mode_AF_PP);
+//	GPIO_init(GPIOA, GPIO_Pin_3, GPIO_Speed_50MHz, GPIO_Mode_IN_FLOATING);
 	
 	USART_init.USART_BaudRate = 115200;
 	USART_init.USART_WordLength = USART_WordLength_8b;
@@ -106,13 +113,33 @@ void USART_init(void) {
 	USART_init.USART_Mode = USART_Mode_Tx;
 	USART_Init(USART1, &USART_init);
 	
-	USART_init.USART_BaudRate = 2400;
-	USART_init.USART_Mode = USART_Mode_Rx;
-	USART_Init(USART2, &USART_init);
-	
-	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
+//	USART_init.USART_BaudRate = 2400;
+//	USART_init.USART_Mode = USART_Mode_Rx;
+//	USART_Init(USART2, &USART_init);
+//	
+//	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
 	USART_Cmd(USART1, ENABLE);
-	USART_Cmd(USART2, ENABLE);
+//	USART_Cmd(USART2, ENABLE);
+}
+
+void DMA_init(void) {
+	DMA_InitTypeDef DMA_InitStructure;
+	
+	DMA_InitStructure.DMA_PeripheralBaseAddr = USART1_BASE + 0x04;
+	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)arr;
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
+	DMA_InitStructure.DMA_BufferSize = 100;
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+	DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
+	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+	
+	USART_DMACmd(USART1, USART_DMAReq_Tx, ENABLE);
+	DMA_Init(DMA1_Channel4, &DMA_InitStructure);
+	DMA_Cmd(DMA1_Channel4, ENABLE);
 }
 
 void USART_SendString(USART_TypeDef* USARTx, char* str, int length) {
