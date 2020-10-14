@@ -2,7 +2,8 @@
 
 unsigned int timer;
 unsigned char WWDG_CNT;
-uint16_t data;
+uint16_t Deepdata;
+uint16_t Tempdata;
 
 void delayus(unsigned int us) {
 	timer = us;
@@ -85,7 +86,7 @@ void ADC_init() {
 	ADC_InitTypeDef ADC_InitStructure;
 	
 	DMA_InitStructure.DMA_PeripheralBaseAddr = ADC1_BASE + 0x4C;
-	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&data;
+	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&Deepdata;
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
 	DMA_InitStructure.DMA_BufferSize = 12;
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
@@ -99,23 +100,30 @@ void ADC_init() {
 	DMA_Init(DMA1_Channel1, &DMA_InitStructure);
 	DMA_Cmd(DMA1_Channel1, ENABLE);
 	
+	DMA_InitStructure.DMA_PeripheralBaseAddr = ADC1_BASE + 0x4C;
+	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&Tempdata;
+	
+	DMA_Init(DMA1_Channel2, &DMA_InitStructure);
+	DMA_Cmd(DMA1_Channel2, ENABLE);
+	
 	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
-	ADC_InitStructure.ADC_ScanConvMode = DISABLE;
+	ADC_InitStructure.ADC_ScanConvMode = ENABLE;
 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
 	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
 	ADC_InitStructure.ADC_NbrOfChannel = 1;
 	
 	ADC_Init(ADC1, &ADC_InitStructure);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_55Cycles5);
 	
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_16, 1, ADC_SampleTime_55Cycles5);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_16, 2, ADC_SampleTime_55Cycles5);
 	ADC_TempSensorVrefintCmd(ENABLE);
 	ADC_DMACmd(ADC1, ENABLE);
 	ADC_Cmd(ADC1, ENABLE);
 	ADC_ResetCalibration(ADC1);
-	while (ADC_GetResetCalibrationStatus(ADC2) == SET);
+	while (ADC_GetResetCalibrationStatus(ADC1) == SET);
 	ADC_StartCalibration(ADC1);
-	while (ADC_GetCalibrationStatus(ADC2) == SET);
+	while (ADC_GetCalibrationStatus(ADC1) == SET);
 	
 	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
 }
