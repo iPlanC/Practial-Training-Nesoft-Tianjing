@@ -1,5 +1,6 @@
 #include "mylib.h"
 
+unsigned int setflag = 0;
 unsigned int timer;
 unsigned char WWDG_CNT;
 uint16_t Deepdata;
@@ -26,26 +27,6 @@ void LED_init(void) {
 	GPIO_init(GPIOA, GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4, GPIO_Speed_50MHz, GPIO_Mode_Out_PP);
 }
 
-void BEEP_init(void) {
-	GPIO_init(GPIOA, GPIO_Pin_8, GPIO_Speed_50MHz, GPIO_Mode_Out_PP);
-}
-
-void KEY_init(void) {
-	GPIO_init(GPIOA, GPIO_Pin_0 | GPIO_Pin_5, GPIO_Speed_50MHz, GPIO_Mode_IPU);
-}
-
-void PIR_init(void) {
-	GPIO_init(GPIOA, GPIO_Pin_6, GPIO_Speed_50MHz, GPIO_Mode_IPD);
-}
-
-void RELAY_init(void) {
-	GPIO_init(GPIOA, GPIO_Pin_7, GPIO_Speed_50MHz, GPIO_Mode_Out_PP);
-}
-
-void MQ_init(void) {
-	GPIO_init(GPIOA, GPIO_Pin_8, GPIO_Speed_50MHz, GPIO_Mode_IPD);
-}
-
 void RCC_init(void) {
 	#ifdef USE_WWDG
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_WWDG, ENABLE);
@@ -53,6 +34,11 @@ void RCC_init(void) {
 	
 	#ifdef USE_USART2
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+	#endif
+	
+	#ifdef USE_RTC
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_BKP, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
 	#endif
 	
 	#ifdef USE_AFIO
@@ -81,66 +67,42 @@ void RCC_init(void) {
 	#endif
 }
 
-void ADC_init() {
-	DMA_InitTypeDef DMA_InitStructure;
-	ADC_InitTypeDef ADC_InitStructure;
+void RTC_init(void) {
+	PWR_BackupAccessCmd(ENABLE);
+	BKP_DeInit();
+	RCC_LSEConfig(RCC_LSE_ON);
+	while (RCC_GetFlagStatus(RCC_FLAG_LSERDY) == SET);
+	RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);
 	
-	DMA_InitStructure.DMA_PeripheralBaseAddr = ADC1_BASE + 0x4C;
-	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&Deepdata;
-	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-	DMA_InitStructure.DMA_BufferSize = 12;
-	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable;
-	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
-	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
-	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
-	DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
-	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+	RCC_RTCCLKCmd(ENABLE);
+	RTC_WaitForLastTask();
+	RTC_WaitForSynchro();
 	
-	DMA_Init(DMA1_Channel1, &DMA_InitStructure);
-	DMA_Cmd(DMA1_Channel1, ENABLE);
+	//RTC_EnterConfigMode();
+	RTC_SetPrescaler(32768);
+	RTC_WaitForLastTask();
+	RTC_WaitForSynchro();
+	//RTC_SetCounter(1602691200 + 28800);
+	//RTC_WaitForLastTask();
+	//RTC_WaitForSynchro();
+	//RTC_ExitConfigMode();
 	
-	DMA_InitStructure.DMA_PeripheralBaseAddr = ADC1_BASE + 0x4C;
-	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&Tempdata;
-	
-	DMA_Init(DMA1_Channel2, &DMA_InitStructure);
-	DMA_Cmd(DMA1_Channel2, ENABLE);
-	
-	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
-	ADC_InitStructure.ADC_ScanConvMode = ENABLE;
-	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
-	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
-	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
-	ADC_InitStructure.ADC_NbrOfChannel = 1;
-	
-	ADC_Init(ADC1, &ADC_InitStructure);
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_55Cycles5);
-	
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_16, 2, ADC_SampleTime_55Cycles5);
-	ADC_TempSensorVrefintCmd(ENABLE);
-	ADC_DMACmd(ADC1, ENABLE);
-	ADC_Cmd(ADC1, ENABLE);
-	ADC_ResetCalibration(ADC1);
-	while (ADC_GetResetCalibrationStatus(ADC1) == SET);
-	ADC_StartCalibration(ADC1);
-	while (ADC_GetCalibrationStatus(ADC1) == SET);
-	
-	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+	PWR_BackupAccessCmd(DISABLE);
 }
 
 void USART_init(void) {
 	USART_InitTypeDef USART_init;
 //	NVIC_InitTypeDef NVIC_init;
-	
+//	
 //	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
-//	NVIC_init.NVIC_IRQChannel = USART2_IRQn;
+//	NVIC_init.NVIC_IRQChannel = USART1_IRQn;
 //	NVIC_init.NVIC_IRQChannelPreemptionPriority = 0;
 //	NVIC_init.NVIC_IRQChannelSubPriority = 2;
 //	NVIC_init.NVIC_IRQChannelCmd = ENABLE;
 //	NVIC_Init(&NVIC_init);
 	
 	GPIO_init(GPIOA, GPIO_Pin_9, GPIO_Speed_50MHz, GPIO_Mode_AF_PP);
-//	GPIO_init(GPIOA, GPIO_Pin_10, GPIO_Speed_50MHz, GPIO_Mode_IN_FLOATING);
+	GPIO_init(GPIOA, GPIO_Pin_10, GPIO_Speed_50MHz, GPIO_Mode_IN_FLOATING);
 //	GPIO_init(GPIOA, GPIO_Pin_2, GPIO_Speed_50MHz, GPIO_Mode_AF_PP);
 //	GPIO_init(GPIOA, GPIO_Pin_3, GPIO_Speed_50MHz, GPIO_Mode_IN_FLOATING);
 	
@@ -149,14 +111,14 @@ void USART_init(void) {
 	USART_init.USART_StopBits = USART_StopBits_1;
 	USART_init.USART_Parity = USART_Parity_No;
 	USART_init.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-	USART_init.USART_Mode = USART_Mode_Tx;
+	USART_init.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
 	USART_Init(USART1, &USART_init);
 	
 //	USART_init.USART_BaudRate = 2400;
 //	USART_init.USART_Mode = USART_Mode_Rx;
 //	USART_Init(USART2, &USART_init);
 //	
-//	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
+//	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 	USART_Cmd(USART1, ENABLE);
 //	USART_Cmd(USART2, ENABLE);
 }
@@ -181,17 +143,104 @@ int KEY_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
 	return KEY_OFF;
 }
 
-int PIR_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
-	return KEY_Scan(GPIOx, GPIO_Pin_x);
-}
-
-int MQ_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
-	return KEY_Scan(GPIOx, GPIO_Pin_x);
-}
-
 int fputc(int c, FILE *fp) {
 	while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
 	USART_SendData(USART1, c);
 	while(USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
 	return 0;
+}
+
+int isLeap(int year) {
+	return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+}
+
+int monthDays(int month,int leap) {
+	int days[2][13] = {{0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
+                       {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}};
+	return days[leap][month];
+}
+
+void Set_Time(void) {
+	if ((setflag == 0) && (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)) {
+		int i = 0;
+		int temp = 0;
+		int leap = 0;
+		unsigned int time = 0;
+		printf("input year:\n");
+		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)
+			temp = USART_ReceiveData(USART1);
+		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
+		leap = isLeap(temp);
+		time = time + (temp + 2000 - 1970) * (60 * 60 * 24 * 365);
+		
+		printf("input month:\n");
+		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)
+			temp = USART_ReceiveData(USART1);
+		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
+		for (i = 1; i <= temp; i++) {
+			time = time + monthDays(i, leap) * (60 * 60 * 24);
+		}
+		
+		printf("input date:\n");
+		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)
+			temp = USART_ReceiveData(USART1);
+		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
+		time = time + USART_ReceiveData(USART1) * (60 * 60 * 24);
+		
+		printf("input hour:\n");
+		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)
+			temp = USART_ReceiveData(USART1);
+		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
+		time = time + USART_ReceiveData(USART1) * (60 * 60);
+		
+		printf("input minute:\n");
+		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)
+			temp = USART_ReceiveData(USART1);
+		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
+		time = time + USART_ReceiveData(USART1) * 60;
+		
+		printf("input second:\n");
+		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)
+			temp = USART_ReceiveData(USART1);
+		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
+		time = time + USART_ReceiveData(USART1);
+		
+		//time = time + 28800;
+		
+		PWR_BackupAccessCmd(ENABLE);
+		RTC_SetCounter(time);
+		RTC_WaitForLastTask();
+		RTC_WaitForSynchro();
+		PWR_BackupAccessCmd(DISABLE);
+		
+		setflag = 1;
+	}
+}
+
+void Get_Time(void) {
+	if (setflag == 1) {
+		int time = 0;
+		dateTime date;
+		date.month = 1;
+		date.year = 1970;
+		time = RTC_GetCounter();
+		printf("%d second(s).\t", time);
+		
+		date.day = time / (60 * 60 * 24);
+		while (date.day >= leapDay(date.year)) {
+			date.day = date.day - leapDay(date.year);
+			date.year++;
+		}
+		while (date.day >= monthDays(date.month, isLeap(date.year))) {
+			date.day = date.day - monthDays(date.month, isLeap(date.year));
+			date.month++;
+		}
+		
+		printf("%04d-", date.year);
+		printf("%02d-", date.month);
+		printf("%02d ", date.day + 1);
+		printf("%02d:", time / (60 * 60) % 24);
+		printf("%02d:", time / 60 % 60);
+		printf("%02d.\n", time % 60);
+	}
 }
