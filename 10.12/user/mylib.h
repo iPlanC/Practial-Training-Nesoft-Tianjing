@@ -37,13 +37,12 @@ typedef struct {
 void delayus              (unsigned int us);
 
 void GPIO_init            (GPIO_TypeDef* GPIOx, u16 GPIO_Pin, GPIOSpeed_TypeDef GPIO_Speed, GPIOMode_TypeDef GPIO_Mode);
-void LED_init             (void);
 void RCC_init             (void);
 void SysTick_init         (void);
 void RTC_init             (void);
 void USART_init           (void);
 
-int KEY_Scan              (GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x);
+char* USART_GetString     (USART_TypeDef* USARTx);
 
 int isLeap                (int year);
 int monthDays             (int month,int leap);

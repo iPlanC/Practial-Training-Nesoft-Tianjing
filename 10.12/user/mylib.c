@@ -1,8 +1,9 @@
 #include "mylib.h"
 
+volatile char receiveBuffer[50];
+volatile uint16_t receiveLength = 0;
 unsigned int setflag = 0;
 unsigned int timer;
-unsigned char WWDG_CNT;
 uint16_t Deepdata;
 uint16_t Tempdata;
 
@@ -21,10 +22,6 @@ void GPIO_init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x, GPIOSpeed_TypeDef GPIO_Speed
 	GPIOA_init.GPIO_Mode = GPIO_Mode;
 	
 	GPIO_Init(GPIOx, &GPIOA_init);
-}
-
-void LED_init(void) {
-	GPIO_init(GPIOA, GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4, GPIO_Speed_50MHz, GPIO_Mode_Out_PP);
 }
 
 void RCC_init(void) {
@@ -128,19 +125,15 @@ void SysTick_init(void) {
 	SysTick->CTRL &= ~(1 << 0);
 }
 
-int KEY_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
+
+char* USART_GetString(USART_TypeDef* USARTx) {
 	int i = 0;
-	if (GPIO_ReadInputDataBit(GPIOx, GPIO_Pin_x) == 0x0) {
-		delayus(0xF);
-		while ((GPIO_ReadInputDataBit(GPIOx, GPIO_Pin_x) == 0x0) && (i < 0xFFFFF)) i++;
-		if (i < 0xFFFFF) {
-			return KEY_ON;
-		}
-		else {
-			return KEY_LONG;
-		}
+	char* temp = "0000000000000000";
+	for (i = 0; i <= 14; i++) {
+		while (USART_GetFlagStatus(USARTx, USART_FLAG_RXNE) == RESET);
+		temp[i] = (char)USART_ReceiveData(USART1);
 	}
-	return KEY_OFF;
+	return temp;
 }
 
 int fputc(int c, FILE *fp) {
@@ -161,49 +154,13 @@ int monthDays(int month,int leap) {
 }
 
 void Set_Time(void) {
-	if ((setflag == 0) && (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)) {
-		int i = 0;
-		int temp = 0;
-		int leap = 0;
+	if (setflag == 0) {
+		char* temp = "0000000000000000";
 		unsigned int time = 0;
-		printf("input year:\n");
-		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)
-			temp = USART_ReceiveData(USART1);
-		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
-		leap = isLeap(temp);
-		time = time + (temp + 2000 - 1970) * (60 * 60 * 24 * 365);
-		
-		printf("input month:\n");
-		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)
-			temp = USART_ReceiveData(USART1);
-		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
-		for (i = 1; i <= temp; i++) {
-			time = time + monthDays(i, leap) * (60 * 60 * 24);
-		}
-		
 		printf("input date:\n");
-		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)
-			temp = USART_ReceiveData(USART1);
-		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
-		time = time + USART_ReceiveData(USART1) * (60 * 60 * 24);
+		temp = USART_GetString(USART1);
 		
-		printf("input hour:\n");
-		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)
-			temp = USART_ReceiveData(USART1);
-		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
-		time = time + USART_ReceiveData(USART1) * (60 * 60);
-		
-		printf("input minute:\n");
-		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)
-			temp = USART_ReceiveData(USART1);
-		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
-		time = time + USART_ReceiveData(USART1) * 60;
-		
-		printf("input second:\n");
-		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)
-			temp = USART_ReceiveData(USART1);
-		while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
-		time = time + USART_ReceiveData(USART1);
+		printf("%s\n", temp);
 		
 		//time = time + 28800;
 		
