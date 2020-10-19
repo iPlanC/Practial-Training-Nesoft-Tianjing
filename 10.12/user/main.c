@@ -7,8 +7,9 @@ int main(void) {
 	USART_init();
 	SysTick_init();
 	
+	Set_Time();
+	
 	while (1) {
-		Set_Time();
 		Get_Time();
 		delayus(1000000);
 	}

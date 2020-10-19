@@ -42,7 +42,7 @@ void SysTick_init         (void);
 void RTC_init             (void);
 void USART_init           (void);
 
-char* USART_GetString     (USART_TypeDef* USARTx);
+void USART_GetString      (USART_TypeDef* USARTx, char* temp);
 
 int isLeap                (int year);
 int monthDays             (int month,int leap);

@@ -88,7 +88,7 @@ void RTC_init(void) {
 }
 
 void USART_init(void) {
-	USART_InitTypeDef USART_init;
+	USART_InitTypeDef USART1_init;
 //	NVIC_InitTypeDef NVIC_init;
 //	
 //	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
@@ -103,13 +103,13 @@ void USART_init(void) {
 //	GPIO_init(GPIOA, GPIO_Pin_2, GPIO_Speed_50MHz, GPIO_Mode_AF_PP);
 //	GPIO_init(GPIOA, GPIO_Pin_3, GPIO_Speed_50MHz, GPIO_Mode_IN_FLOATING);
 	
-	USART_init.USART_BaudRate = 115200;
-	USART_init.USART_WordLength = USART_WordLength_8b;
-	USART_init.USART_StopBits = USART_StopBits_1;
-	USART_init.USART_Parity = USART_Parity_No;
-	USART_init.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-	USART_init.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
-	USART_Init(USART1, &USART_init);
+	USART1_init.USART_BaudRate = 115200;
+	USART1_init.USART_WordLength = USART_WordLength_8b;
+	USART1_init.USART_StopBits = USART_StopBits_1;
+	USART1_init.USART_Parity = USART_Parity_No;
+	USART1_init.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+	USART1_init.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
+	USART_Init(USART1, &USART1_init);
 	
 //	USART_init.USART_BaudRate = 2400;
 //	USART_init.USART_Mode = USART_Mode_Rx;
@@ -125,15 +125,12 @@ void SysTick_init(void) {
 	SysTick->CTRL &= ~(1 << 0);
 }
 
-
-char* USART_GetString(USART_TypeDef* USARTx) {
+void USART_GetString(USART_TypeDef* USARTx, char* temp) {
 	int i = 0;
-	char* temp = "0000000000000000";
-	for (i = 0; i <= 14; i++) {
-		while (USART_GetFlagStatus(USARTx, USART_FLAG_RXNE) == RESET);
-		temp[i] = (char)USART_ReceiveData(USART1);
+	while(i < 14) {
+		while(USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)
+			temp[i++] = USART_ReceiveData(USART1);	
 	}
-	return temp;
 }
 
 int fputc(int c, FILE *fp) {
@@ -158,7 +155,7 @@ void Set_Time(void) {
 		char* temp = "0000000000000000";
 		unsigned int time = 0;
 		printf("input date:\n");
-		temp = USART_GetString(USART1);
+		USART_GetString(USART1, temp);
 		
 		printf("%s\n", temp);
 		
