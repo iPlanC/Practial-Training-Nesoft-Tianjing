@@ -119,6 +119,28 @@ void TIM_init() {
 	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
 }
 
+void TIM_PWM_init() {
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+	TIM_OCInitTypeDef TIM_OCInitStructure;
+	
+	SysTick_init();
+	
+	GPIO_init(GPIOA, GPIO_Pin_1, GPIO_Speed_50MHz, GPIO_Mode_AF_PP);
+	
+	TIM_TimeBaseStructure.TIM_Period = 19999;
+	TIM_TimeBaseStructure.TIM_Prescaler = 71;
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+	
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OC2Init(TIM2, &TIM_OCInitStructure);
+	
+	TIM_Cmd(TIM2, ENABLE);
+}
+
 void SysTick_init() {
 	while (SysTick_Config(72));
 	SysTick->CTRL &= ~(1 << 0);

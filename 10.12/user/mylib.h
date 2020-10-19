@@ -44,6 +44,7 @@ void LED_init             (void);
 void RCC_init             (void);
 void USART_init           (void);
 void TIM_init             (void);
+void TIM_PWM_init         (void);
 void SysTick_init         (void);
 
 int KEY_Scan              (GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x);
