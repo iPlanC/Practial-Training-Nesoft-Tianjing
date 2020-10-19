@@ -3,14 +3,10 @@
 int main(void) {
 	
 	RCC_init();
-	RTC_init();
-	USART_init();
-	SysTick_init();
-	
-	Set_Time();
+	LED_init();
+	TIM_init();
 	
 	while (1) {
-		Get_Time();
-		delayus(1000000);
+		
 	}
 }

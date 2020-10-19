@@ -8,11 +8,12 @@
 
 //#define USE_WWDG
 //#define USE_USART2
-#define USE_RTC
+//#define USE_RTC
+#define USE_TIM2
 //#define USE_AFIO
 #define USE_GPIOA
 //#define USE_GPIOB
-#define USE_USART1
+//#define USE_USART1
 //#define USE_ADC1
 //#define USE_DMA
 
@@ -37,16 +38,9 @@ typedef struct {
 void delayus              (unsigned int us);
 
 void GPIO_init            (GPIO_TypeDef* GPIOx, u16 GPIO_Pin, GPIOSpeed_TypeDef GPIO_Speed, GPIOMode_TypeDef GPIO_Mode);
+void LED_init             (void);
 void RCC_init             (void);
+void TIM_init             (void);
 void SysTick_init         (void);
-void RTC_init             (void);
-void USART_init           (void);
-
-void USART_GetString      (USART_TypeDef* USARTx, char* temp);
-
-int isLeap                (int year);
-int monthDays             (int month,int leap);
-void Set_Time             (void);
-void Get_Time             (void);
 
 #endif
