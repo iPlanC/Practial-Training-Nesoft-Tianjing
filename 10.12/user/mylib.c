@@ -9,6 +9,14 @@ void delayus(unsigned int us) {
 	SysTick->CTRL &= ~(1 << 0);
 }
 
+void delayus_TIM(unsigned int us) {
+	timer = 0;
+	TIM_Cmd(TIM2, ENABLE);
+	while (timer < us);
+	timer = 0;
+	TIM_Cmd(TIM2, DISABLE);
+}
+
 void GPIO_init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x, GPIOSpeed_TypeDef GPIO_Speed, GPIOMode_TypeDef GPIO_Mode) {
 	GPIO_InitTypeDef GPIOA_init;
 	
@@ -41,6 +49,10 @@ void RCC_init(void) {
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
 	#endif
 	
+	#ifdef USE_TIM3
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+	#endif
+	
 	#ifdef USE_AFIO
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	#endif
@@ -67,6 +79,23 @@ void RCC_init(void) {
 	#endif
 }
 
+void USART_init(void) {
+	USART_InitTypeDef USART_init;
+	
+	GPIO_init(GPIOA, GPIO_Pin_9, GPIO_Speed_50MHz, GPIO_Mode_AF_PP);
+	//GPIO_init(GPIOA, GPIO_Pin_10, GPIO_Speed_50MHz, GPIO_Mode_IN_FLOATING);
+	
+	USART_init.USART_BaudRate = 115200;
+	USART_init.USART_WordLength = USART_WordLength_8b;
+	USART_init.USART_StopBits = USART_StopBits_1;
+	USART_init.USART_Parity = USART_Parity_No;
+	USART_init.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+	USART_init.USART_Mode = USART_Mode_Tx;
+	USART_Init(USART1, &USART_init);
+	
+	USART_Cmd(USART1, ENABLE);
+}
+
 void TIM_init() {
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
@@ -78,18 +107,23 @@ void TIM_init() {
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	
 	NVIC_Init(&NVIC_InitStructure);
 	
-	TIM_TimeBaseStructure.TIM_Period = 9999;
+	NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
+	NVIC_Init(&NVIC_InitStructure);
+	
+	TIM_TimeBaseStructure.TIM_Period = 9;
 	TIM_TimeBaseStructure.TIM_Prescaler = 7199;
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
 	
 	TIM_ClearFlag(TIM2, TIM_IT_Update);
+	TIM_ClearFlag(TIM3, TIM_IT_Update);
 	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
-	TIM_Cmd(TIM2, ENABLE);
+	TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);
 }
 
 void SysTick_init() {
@@ -97,9 +131,32 @@ void SysTick_init() {
 	SysTick->CTRL &= ~(1 << 0);
 }
 
-void TIM2_IRQHandler() {
-	if (TIM_GetFlagStatus(TIM2, TIM_IT_Update) == SET) {
-		LED_TOGGLE;
-		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+int KEY_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
+	int i = 0;
+	if (GPIO_ReadInputDataBit(GPIOx, GPIO_Pin_x) == 0x0) {
+		delayus(0xF);
+		while ((GPIO_ReadInputDataBit(GPIOx, GPIO_Pin_x) == 0x0) && (i < 0xFFFFF)) i++;
+		if (i < 0xFFFFF) {
+			return KEY_ON;
+		}
+		else {
+			return KEY_LONG;
+		}
 	}
+	return KEY_OFF;
+}
+
+void TIM2_IRQHandler() {
+	timer++;
+}
+
+void TIM3_IRQHandler() {
+	timer++;
+}
+
+int fputc(int c, FILE *fp) {
+	while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+	USART_SendData(USART1, c);
+	while(USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
+	return 0;
 }
