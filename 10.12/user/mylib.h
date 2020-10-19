@@ -10,7 +10,7 @@
 //#define USE_USART2
 //#define USE_RTC
 #define USE_TIM2
-#define USE_TIM2
+//#define USE_TIM3
 //#define USE_AFIO
 #define USE_GPIOA
 //#define USE_GPIOB

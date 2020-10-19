@@ -109,21 +109,14 @@ void TIM_init() {
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 	
-	NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
-	NVIC_Init(&NVIC_InitStructure);
-	
 	TIM_TimeBaseStructure.TIM_Period = 9;
 	TIM_TimeBaseStructure.TIM_Prescaler = 7199;
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
-	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
 	
 	TIM_ClearFlag(TIM2, TIM_IT_Update);
-	TIM_ClearFlag(TIM3, TIM_IT_Update);
 	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
-	TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);
 }
 
 void SysTick_init() {
@@ -147,10 +140,6 @@ int KEY_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
 }
 
 void TIM2_IRQHandler() {
-	timer++;
-}
-
-void TIM3_IRQHandler() {
 	timer++;
 }
 

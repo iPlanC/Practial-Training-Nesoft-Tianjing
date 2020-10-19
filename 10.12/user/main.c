@@ -15,9 +15,9 @@ int main(void) {
 		delayus_TIM(15);
 		GPIO_ResetBits(GPIOA, GPIO_Pin_2);
 		
-		TIM_Cmd(TIM3, ENABLE);
+		TIM_Cmd(TIM2, ENABLE);
 		while (KEY_Scan(GPIOA, GPIO_Pin_1) != KEY_OFF);
-		TIM_Cmd(TIM3, DISABLE);
+		TIM_Cmd(TIM2, DISABLE);
 		
 		printf("Distance = %d\n", timer * 340 / 2);
 		
