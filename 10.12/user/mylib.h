@@ -37,7 +37,6 @@ typedef struct {
 } dateTime;
 
 void delayus              (unsigned int us);
-void delayus_TIM          (unsigned int us);
 
 void GPIO_init            (GPIO_TypeDef* GPIOx, u16 GPIO_Pin, GPIOSpeed_TypeDef GPIO_Speed, GPIOMode_TypeDef GPIO_Mode);
 void LED_init             (void);

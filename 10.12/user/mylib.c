@@ -9,14 +9,6 @@ void delayus(unsigned int us) {
 	SysTick->CTRL &= ~(1 << 0);
 }
 
-void delayus_TIM(unsigned int us) {
-	timer = 0;
-	TIM_Cmd(TIM2, ENABLE);
-	while (timer < us);
-	timer = 0;
-	TIM_Cmd(TIM2, DISABLE);
-}
-
 void GPIO_init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x, GPIOSpeed_TypeDef GPIO_Speed, GPIOMode_TypeDef GPIO_Mode) {
 	GPIO_InitTypeDef GPIOA_init;
 	
@@ -122,12 +114,22 @@ void TIM_init() {
 void TIM_PWM_init() {
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	TIM_OCInitTypeDef TIM_OCInitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
 	
 	SysTick_init();
 	
-	GPIO_init(GPIOA, GPIO_Pin_1, GPIO_Speed_50MHz, GPIO_Mode_AF_PP);
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+	NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
 	
-	TIM_TimeBaseStructure.TIM_Period = 19999;
+	GPIO_init(GPIOA, GPIO_Pin_1, GPIO_Speed_50MHz, GPIO_Mode_IPD);
+	GPIO_init(GPIOA, GPIO_Pin_2, GPIO_Speed_50MHz, GPIO_Mode_Out_PP);
+	GPIO_init(GPIOA, GPIO_Pin_3, GPIO_Speed_50MHz, GPIO_Mode_Out_PP);
+	
+	TIM_TimeBaseStructure.TIM_Period = 0xFFFF;
 	TIM_TimeBaseStructure.TIM_Prescaler = 71;
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
@@ -136,9 +138,10 @@ void TIM_PWM_init() {
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OC2Init(TIM2, &TIM_OCInitStructure);
+	TIM_OC3Init(TIM2, &TIM_OCInitStructure);
 	
-	TIM_Cmd(TIM2, ENABLE);
+	TIM_ClearFlag(TIM2, TIM_IT_Update);
+	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
 }
 
 void SysTick_init() {
@@ -147,22 +150,10 @@ void SysTick_init() {
 }
 
 int KEY_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_x) {
-	int i = 0;
 	if (GPIO_ReadInputDataBit(GPIOx, GPIO_Pin_x) == 0x0) {
-		delayus(0xF);
-		while ((GPIO_ReadInputDataBit(GPIOx, GPIO_Pin_x) == 0x0) && (i < 0xFFFFF)) i++;
-		if (i < 0xFFFFF) {
-			return KEY_ON;
-		}
-		else {
-			return KEY_LONG;
-		}
+		return KEY_ON;
 	}
 	return KEY_OFF;
-}
-
-void TIM2_IRQHandler() {
-	timer++;
 }
 
 int fputc(int c, FILE *fp) {
