@@ -24,7 +24,7 @@ void PA0_EXTI0_Configuration(void)
 	
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD; //修改的地方
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; //修改的地方
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource0);
 	
@@ -158,55 +158,13 @@ void SetSysClock_to_72MHZ(void)
   }
 }
 
-static void My_SetSysClockTo72(void)
-{
-  __IO uint32_t StartUpCounter = 0, HSEStatus = 0;   
-  RCC->CR |= ((uint32_t)RCC_CR_HSEON);
-  do
-  {
-    HSEStatus = RCC->CR & RCC_CR_HSERDY;
-    StartUpCounter++;  
-  } while((HSEStatus == 0) && (StartUpCounter != HSE_STARTUP_TIMEOUT));
-  if ((RCC->CR & RCC_CR_HSERDY) != RESET)
-	HSEStatus = (uint32_t)0x01;
-  else
-	HSEStatus = (uint32_t)0x00;
-  if (HSEStatus == (uint32_t)0x01)
-  {
-    FLASH->ACR |= FLASH_ACR_PRFTBE;
-    FLASH->ACR &= (uint32_t)((uint32_t)~FLASH_ACR_LATENCY);
-    FLASH->ACR |= (uint32_t)FLASH_ACR_LATENCY_2;
-    RCC->CFGR |= (uint32_t)RCC_CFGR_HPRE_DIV1;
-    RCC->CFGR |= (uint32_t)RCC_CFGR_PPRE2_DIV1;
-    RCC->CFGR |= (uint32_t)RCC_CFGR_PPRE1_DIV2;
-#ifdef STM32F10X_CL
-    RCC->CFGR2 &= (uint32_t)~(RCC_CFGR2_PREDIV2 | RCC_CFGR2_PLL2MUL | RCC_CFGR2_PREDIV1 | RCC_CFGR2_PREDIV1SRC);
-    RCC->CFGR2 |= (uint32_t)(RCC_CFGR2_PREDIV2_DIV5 | RCC_CFGR2_PLL2MUL8 | RCC_CFGR2_PREDIV1SRC_PLL2 | RCC_CFGR2_PREDIV1_DIV5);
-    RCC->CR |= RCC_CR_PLL2ON;
-    while((RCC->CR & RCC_CR_PLL2RDY) == 0);
-    RCC->CFGR &= (uint32_t)~(RCC_CFGR_PLLXTPRE | RCC_CFGR_PLLSRC | RCC_CFGR_PLLMULL);
-    RCC->CFGR |= (uint32_t)(RCC_CFGR_PLLXTPRE_PREDIV1 | RCC_CFGR_PLLSRC_PREDIV1 | RCC_CFGR_PLLMULL9); 
-#else
-    RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_PLLSRC | RCC_CFGR_PLLXTPRE | RCC_CFGR_PLLMULL));
-    RCC->CFGR |= (uint32_t)(RCC_CFGR_PLLSRC_HSE | RCC_CFGR_PLLMULL9);
-#endif
-    RCC->CR |= RCC_CR_PLLON;
-    while((RCC->CR & RCC_CR_PLLRDY) == 0);
-    RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_SW));
-    RCC->CFGR |= (uint32_t)RCC_CFGR_SW_PLL;    
-    while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS) != (uint32_t)0x08);
-  }
-}
-
-
 void EXTI0_IRQHandler(void)
 {
 	if(EXTI_GetITStatus(EXTI_Line0) != RESET)
 	{
 //		GPIOA->ODR ^= GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4;
 //		wait(5000000);
-//		SetSysClock_to_72MHZ();
-		//My_SetSysClockTo72();
+		SetSysClock_to_72MHZ();
 		EXTI_ClearITPendingBit(EXTI_Line0);
 	}
 }

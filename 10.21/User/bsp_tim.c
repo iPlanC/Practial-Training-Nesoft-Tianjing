@@ -1,5 +1,7 @@
 #include "bsp_tim.h"
 
+extern unsigned int count;
+
 unsigned int times = 0;
 
 unsigned int high_value = 0;
@@ -39,13 +41,7 @@ void TIM2_IRQHandler(void)
 {
 	if(TIM_GetITStatus(TIM2, TIM_IT_Update) == SET)
 	{
-		times++;
-		if(times == 1000)
-		{
-			count++;
-			
-			times = 0;
-		}
+		count++;
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 	}
 }

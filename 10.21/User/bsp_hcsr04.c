@@ -12,7 +12,7 @@ void TIM2_Count_Configuration(void)
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
 
-	TIM_Cmd(TIM2, ENABLE);
+	TIM_Cmd(TIM2, DISABLE);
 	//暂时先关闭TIM2时钟，等全部初始化结束后正式使用定时器前再开启
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, DISABLE);
 }
