@@ -1,4 +1,5 @@
 #include "bsp_iic.h"
+#include "bsp_SysTick.h"
 
 //PB6:SCL  PB7:SDA	
 void IIC1_Configuration(void)
@@ -17,6 +18,7 @@ void IIC1_Configuration(void)
 
 void IIC_START(void)
 {
+	SysTick_Configuration();
 	SDA_OUT();
 	
 	IIC_SDA_H;

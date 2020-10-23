@@ -1,5 +1,9 @@
 #include "bsp_uart.h"
 #include "bsp_SysTick.h"
+#include "bsp_iic_at24c02.h"
+
+unsigned char buf[10];
+int i = 0;
 
 void Uart1_Configuration(void)
 {
@@ -84,32 +88,13 @@ void control_LED(unsigned int led_number, unsigned int status)
 
 void USART1_IRQHandler(void)
 {
-	static unsigned int i = 1;
-	static unsigned int flag = 0;
-	
-	static unsigned int arr[5] = {0, 0, 0, 0, 0};
-	
-	unsigned char ch;
+	printf("USART1_IRQHandler\n");
 	while(USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET)
 	{
-		ch = USART_ReceiveData(USART1);
-		if(ch == 0xaa)
-		{
-			arr[0] = ch;
-			flag = 1;
-		}
-		if(ch != 0xaa && flag == 1)
-		{
-			arr[i++] = ch;
-			
-			if(i == 5)
-			{
-				flag = 0;
-				i = 1;
-				if(((arr[i]+arr[2]) == arr[3]) && arr[4] == 0xff)
-					control_LED(arr[1], arr[2]);
-			}
-		}
+		//AT24C02_Write_Page(0x0, IIC_Read_Byte(0x0) * 10 + (USART_ReceiveData(USART1) - '0'));
+		i = i * 10 + (USART_ReceiveData(USART1) - '0');
+		IIC_Write_Byte(0x0, i);
+		printf("3\n");
 	}			
 }
 
