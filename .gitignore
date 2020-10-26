@@ -16,4 +16,4 @@
 *.hex
 *.plg
 *.tra
-*\\Output\\*.*
+*/Output
