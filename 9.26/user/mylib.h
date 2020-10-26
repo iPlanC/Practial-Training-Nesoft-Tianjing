@@ -13,7 +13,7 @@
 #define LED_TOGGLE4 (GPIOA->ODR ^= GPIO_Pin_4)
 #define BEEP_TOGGLE (GPIOB->ODR ^= GPIO_Pin_8)
 
-void delay(void);
+void delay(unsigned int loop);
 void LED_init(void);
 void RCC_init(void);
 void KEY_init(void);

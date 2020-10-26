@@ -3,17 +3,4 @@
 *.out
 
 # uvision
-*.o
-*.d
-*.crf
-*.lst
-*.axf
-*.htm
-*.lnp
-*.map
-*.sct
-*.bak
-*.hex
-*.plg
-*.tra
 */Output
