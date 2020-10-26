@@ -12,3 +12,8 @@
 *.lnp
 *.map
 *.sct
+*.bak
+*.hex
+*.plg
+*.tra
+*\\Output\\*.*
