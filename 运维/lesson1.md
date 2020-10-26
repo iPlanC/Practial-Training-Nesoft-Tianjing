@@ -1,7 +1,7 @@
 <!--
  * @Author: PlanC
  * @Date: 2020-10-21 18:05:31
- * @LastEditTime: 2020-10-21 19:20:49
+ * @LastEditTime: 2020-10-26 18:41:42
  * @FilePath: \Practical-Training-Neusoft-Tianjin\运维\lesson1.md
 -->
 
@@ -86,7 +86,7 @@
 - 用户模式
   - `Router> `
   - 只能做一些简单的查看
-- 管理模式
+- 特权模式
   - `Router# enable`
   - `Router# en`
   - 可以做简单的更改，也可以查看所有的信息
@@ -103,6 +103,6 @@
 - 退出<kbd>ctrl</kbd> + <kbd>z</kbd>
   - 接口模式`exit`
   - 全局模式`exit`
-  - 管理模式
+  - 特权模式
     - `disable`
     - `disa`
