@@ -6,6 +6,8 @@
 #include "os_type.h"
 
 /**************** 用户任务声明 *******************/
+void Task1(void *p_arg);
+void Task2(void *p_arg);
 void Task_init(void *p_arg);
 void Task_LED1(void *p_arg);
 void Task_LED2(void *p_arg);

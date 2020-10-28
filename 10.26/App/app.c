@@ -1,4 +1,6 @@
 #include "app.h"
+#include <stdio.h>
+#include <string.h>
 
 /* 
 * º¯ÊýÃû£ºTask_LED
@@ -9,11 +11,46 @@
 
 int flag = 0;
 
-extern OS_TCB	LED_TCB;
-extern OS_TCB	LED1_TCB;
-extern OS_TCB	LED2_TCB;
-extern OS_TCB	LED3_TCB;
-extern OS_TCB	LED4_TCB;
+char str[30];
+
+extern OS_SEM  SEM1;
+extern OS_TMR  tmr;
+extern OS_TCB  LED_TCB;
+extern OS_TCB  LED1_TCB;
+extern OS_TCB  LED2_TCB;
+extern OS_TCB  LED3_TCB;
+extern OS_TCB  LED4_TCB;
+
+void TimCallback (OS_TMR *p_tmr, void *p_arg) {
+	p_arg = p_arg;
+	LED_TOGGLE;
+}
+
+void Task1(void *p_arg) {
+	OS_ERR err;
+	char tsk1_str[] = "Hello World\n";
+	while (1) {
+		OSSemPend(&SEM1, 0, OS_OPT_PEND_BLOCKING, (void *)0, &err);
+		memset(str, '\0', sizeof(str));
+		memcpy(str, tsk1_str, sizeof(tsk1_str));
+		printf("%s", str);
+		OSTimeDlyHMSM(0, 0, 1, 0, OS_OPT_TIME_HMSM_STRICT,&err);
+		OSSemPost(&SEM1, OS_OPT_POST_ALL, &err);
+	}
+}
+
+void Task2(void *p_arg) {
+	OS_ERR err;
+	char tsk2_str[] = "Morning\n";
+	while (1) {
+		OSSemPend(&SEM1, 0, OS_OPT_PEND_BLOCKING, (void *)0, &err);
+		memset(str, '\0', sizeof(str));
+		memcpy(str, tsk2_str, sizeof(tsk2_str));
+		printf("%s", str);
+		OSTimeDlyHMSM(0, 0, 1, 0, OS_OPT_TIME_HMSM_STRICT,&err);
+		OSSemPost(&SEM1, OS_OPT_POST_ALL, &err);
+	}
+}
 
 void Task_LED1(void *p_arg)
 {
@@ -93,4 +130,13 @@ void Task_LED4(void *p_arg)
 			//OSTimeDlyHMSM(0, 0,0,200,OS_OPT_TIME_HMSM_STRICT,&err);
 		}
 	}
+}
+
+int fputc (int c, FILE *fp)
+{
+	while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) != SET);
+	USART_SendData(USART1, c);
+	while(USART_GetFlagStatus(USART1, USART_FLAG_TC) != SET);
+	
+	return 0;
 }
