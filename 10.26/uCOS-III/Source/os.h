@@ -639,8 +639,8 @@ typedef  struct  os_rdy_list         OS_RDY_LIST;
 
 typedef  struct  os_tick_spoke       OS_TICK_SPOKE;
 
-typedef  void                      (*OS_TMR_CALLBACK_PTR)(void *p_tmr, void *p_arg);
 typedef  struct  os_tmr              OS_TMR;
+typedef  void                      (*OS_TMR_CALLBACK_PTR)(OS_TMR *p_tmr, void *p_arg);
 typedef  struct  os_tmr_spoke        OS_TMR_SPOKE;
 
 

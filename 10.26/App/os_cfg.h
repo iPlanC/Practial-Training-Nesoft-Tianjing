@@ -50,7 +50,7 @@
 
 
                                              /* ----------------------------- EVENT FLAGS --------------------------- */
-#define OS_CFG_FLAG_EN                  0u   /* Enable (1) or Disable (0) code generation for EVENT FLAGS             */
+#define OS_CFG_FLAG_EN                  1u   /* Enable (1) or Disable (0) code generation for EVENT FLAGS             */
 #define OS_CFG_FLAG_DEL_EN              1u   /*     Include code for OSFlagDel()                                      */
 #define OS_CFG_FLAG_MODE_CLR_EN         1u   /*     Include code for Wait on Clear EVENT FLAGS                        */
 #define OS_CFG_FLAG_PEND_ABORT_EN       1u   /*     Include code for OSFlagPendAbort()                                */
@@ -67,7 +67,7 @@
 
 
                                              /* --------------------------- MESSAGE QUEUES -------------------------- */
-#define OS_CFG_Q_EN                     0u   /* Enable (1) or Disable (0) code generation for QUEUES                  */
+#define OS_CFG_Q_EN                     1u   /* Enable (1) or Disable (0) code generation for QUEUES                  */
 #define OS_CFG_Q_DEL_EN                 1u   /*     Include code for OSQDel()                                         */
 #define OS_CFG_Q_FLUSH_EN               1u   /*     Include code for OSQFlush()                                       */
 #define OS_CFG_Q_PEND_ABORT_EN          1u   /*     Include code for OSQPendAbort()                                   */

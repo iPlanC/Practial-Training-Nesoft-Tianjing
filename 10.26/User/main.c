@@ -1,14 +1,11 @@
 #include "includes.h"
 #include <stdio.h>
 
-OS_SEM  SEM1;
+OS_FLAG_GRP flags;
 OS_TCB  key1_TCB;
 OS_TCB  key2_TCB;
 CPU_STK	key1_Stk[128];
 CPU_STK	key2_Stk[128];
-
-
-void TimCallback (OS_TMR *p_tmr, void *p_arg);
 
 /**
   * @brief  主函数
@@ -26,7 +23,7 @@ int main(void)
 	OSInit(&err);		                                        
 	OSSchedRoundRobinCfg(ENABLE, 1, &err);
 	
-	OSSemCreate(&SEM1, "SEM1", 1, &err);
+	OSFlagCreate(&flags, "FLAGS", 0, &err);
 	
 	/*创建任务*/
 	OSTaskCreate((OS_TCB     *)&key1_TCB,                    // 任务控制块指针          
