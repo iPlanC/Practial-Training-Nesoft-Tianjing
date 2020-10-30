@@ -9,6 +9,7 @@
 
 
 void Led_Configuration(void);
+void Motor_Configuration(void);
 void Key_Configuration(void);
 int Key_Scan(GPIO_TypeDef* GPIOx, u16 GPIO_Pin);
 

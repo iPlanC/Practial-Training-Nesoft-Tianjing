@@ -21,7 +21,7 @@ void Task1(void *p_arg) {
 void Task2(void *p_arg) {
 	OS_ERR err;
 	while (1) {
-		OSSemPend(&DHT11_sem, 1, OS_OPT_PEND_NON_BLOCKING, (CPU_TS*)0, &err);
+		OSSemPend(&DHT11_sem, 1, OS_OPT_PEND_BLOCKING, (CPU_TS*)0, &err);
 		printf("Hum: %d, Tem:%d.\n", DHT11_data.humidity, DHT11_data.temperature);
 		printf("task2 complete\n");
 		OSTimeDlyHMSM(0, 0, 0, 10, OS_OPT_TIME_HMSM_STRICT, &err);
