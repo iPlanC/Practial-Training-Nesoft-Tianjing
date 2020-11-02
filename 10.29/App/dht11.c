@@ -12,15 +12,6 @@ void DHT_set_gpio_input(void);
 uint8_t DHT_read_byte(void);
 uint8_t DHT_start(void);
 
-unsigned int timer;
-
-void delay_us(unsigned int us) {
-	timer = us;
-	SysTick->CTRL |= (1 << 0);
-	while (timer);
-	SysTick->CTRL &= ~(1 << 0);
-}
-
 void DHT_set_gpio_output() {
 	RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;		// Bit 3 IOPBEN: I/O port B clock enable, 1:I/O port B clock enabled
 

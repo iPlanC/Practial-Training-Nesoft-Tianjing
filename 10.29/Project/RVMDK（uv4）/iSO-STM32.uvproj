@@ -562,11 +562,6 @@
               <FileType>5</FileType>
               <FilePath>..\..\App\bmp.h</FilePath>
             </File>
-            <File>
-              <FileName>bsp_oled.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\App\bsp_oled.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -581,6 +576,26 @@
               <FileName>LedAndKey.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Bsp\LedAndKey.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_oled.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\App\bsp_oled.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\App\bsp_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\App\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>bmp180.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\App\bmp180.c</FilePath>
             </File>
           </Files>
         </Group>

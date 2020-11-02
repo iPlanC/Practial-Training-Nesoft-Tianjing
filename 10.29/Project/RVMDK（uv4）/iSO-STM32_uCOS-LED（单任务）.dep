@@ -5,7 +5,7 @@ I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
 F (..\..\Lib\CMSIS\stm32f10x_it.c)(0x5F9A69E6)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\stm32f10x_it.o --omf_browse ..\..\output\stm32f10x_it.crf --depend ..\..\output\stm32f10x_it.d)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\User\includes.h)(0x5F9A5BDE)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\app.h)(0x5F9A4FF4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Bsp\bsp.h)(0x5F9B6AE2)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Bsp\bsp.h)(0x5F9F9C46)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x.h)(0x4D783CB4)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\core_cm3.h)(0x4D523B58)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
@@ -37,6 +37,10 @@ I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\os_cfg_app.h)(0x4E39FDC6)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Bsp\LedAndKey.h)(0x5F9BA355)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bsp_oled.h)(0x5F9BA06F)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bsp_i2c.h)(0x5F9F6467)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\dht11.h)(0x5F9A5AA3)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bmp180.h)(0x5F9F9958)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\delay.h)(0x5F9F6C7F)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS-III\Source\os.h)(0x5F991868)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\os_cfg.h)(0x5F991C12)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS-III\uC-CPU\cpu.h)(0x4E3668F0)
@@ -742,10 +746,10 @@ I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_tim.h)(0x4D783BB4)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_usart.h)(0x4D783BB4)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\misc.h)(0x4D783BB4)
-F (..\..\User\main.c)(0x5F9BBB88)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\main.o --omf_browse ..\..\output\main.crf --depend ..\..\output\main.d)
+F (..\..\User\main.c)(0x5F9F9957)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\main.o --omf_browse ..\..\output\main.crf --depend ..\..\output\main.d)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\User\includes.h)(0x5F9A5BDE)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\app.h)(0x5F9A4FF4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Bsp\bsp.h)(0x5F9B6AE2)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Bsp\bsp.h)(0x5F9F9C46)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x.h)(0x4D783CB4)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\core_cm3.h)(0x4D523B58)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
@@ -777,6 +781,10 @@ I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\os_cfg_app.h)(0x4E39FDC6)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Bsp\LedAndKey.h)(0x5F9BA355)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bsp_oled.h)(0x5F9BA06F)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bsp_i2c.h)(0x5F9F6467)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\dht11.h)(0x5F9A5AA3)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bmp180.h)(0x5F9F9958)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\delay.h)(0x5F9F6C7F)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS-III\Source\os.h)(0x5F991868)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\os_cfg.h)(0x5F991C12)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS-III\uC-CPU\cpu.h)(0x4E3668F0)
@@ -786,12 +794,11 @@ I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS-III\uC-LIB\lib_def.h)(0x528B2F58)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS-III\Source\os_type.h)(0x4E3668C0)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS-III\Ports\os_cpu.h)(0x528DE9A2)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\dht11.h)(0x5F9A5AA3)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bmp.h)(0x5F9B7762)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bmp.h)(0x5F9F6821)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C7B744)
 F (..\..\App\app.c)(0x5F9B65BF)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\app.o --omf_browse ..\..\output\app.crf --depend ..\..\output\app.d)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\app.h)(0x5F9A4FF4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Bsp\bsp.h)(0x5F9B6AE2)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Bsp\bsp.h)(0x5F9F9C46)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x.h)(0x4D783CB4)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\core_cm3.h)(0x4D523B58)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
@@ -823,6 +830,10 @@ I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\os_cfg_app.h)(0x4E39FDC6)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Bsp\LedAndKey.h)(0x5F9BA355)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bsp_oled.h)(0x5F9BA06F)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bsp_i2c.h)(0x5F9F6467)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\dht11.h)(0x5F9A5AA3)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bmp180.h)(0x5F9F9958)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\delay.h)(0x5F9F6C7F)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS-III\Source\os.h)(0x5F991868)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\os_cfg.h)(0x5F991C12)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS-III\uC-CPU\cpu.h)(0x4E3668F0)
@@ -832,10 +843,9 @@ I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS-III\uC-LIB\lib_def.h)(0x528B2F58)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS-III\Source\os_type.h)(0x4E3668C0)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS-III\Ports\os_cpu.h)(0x528DE9A2)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\dht11.h)(0x5F9A5AA3)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C7B744)
 I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C7B744)
-F (..\..\App\dht11.c)(0x5F9A71C9)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\dht11.o --omf_browse ..\..\output\dht11.crf --depend ..\..\output\dht11.d)
+F (..\..\App\dht11.c)(0x5F9F6C23)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\dht11.o --omf_browse ..\..\output\dht11.crf --depend ..\..\output\dht11.d)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\dht11.h)(0x5F9A5AA3)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x.h)(0x4D783CB4)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\core_cm3.h)(0x4D523B58)
@@ -865,39 +875,9 @@ I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_usart.h)(0x4D783BB4)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_wwdg.h)(0x4D783BB4)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\misc.h)(0x4D783BB4)
-F (..\..\App\bmp.h)(0x5F9B7762)()
-F (..\..\App\bsp_oled.c)(0x5F9B6B20)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\bsp_oled.o --omf_browse ..\..\output\bsp_oled.crf --depend ..\..\output\bsp_oled.d)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bsp_oled.h)(0x5F9BA06F)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x.h)(0x4D783CB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\core_cm3.h)(0x4D523B58)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\system_stm32f10x.h)(0x4D783CAA)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x_conf.h)(0x59B8DD2F)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_adc.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_bkp.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_can.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_cec.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_crc.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dac.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dbgmcu.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dma.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_exti.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_flash.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_fsmc.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_gpio.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_i2c.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_iwdg.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_pwr.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_rcc.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_rtc.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_sdio.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_spi.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_tim.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_usart.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_wwdg.h)(0x4D783BB4)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\misc.h)(0x4D783BB4)
-F (..\..\Bsp\bsp.c)(0x5F9BA330)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\bsp.o --omf_browse ..\..\output\bsp.crf --depend ..\..\output\bsp.d)
-I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Bsp\bsp.h)(0x5F9B6AE2)
+F (..\..\App\bmp.h)(0x5F9F6821)()
+F (..\..\Bsp\bsp.c)(0x5F9F996F)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\bsp.o --omf_browse ..\..\output\bsp.crf --depend ..\..\output\bsp.d)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Bsp\bsp.h)(0x5F9F9C46)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x.h)(0x4D783CB4)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\core_cm3.h)(0x4D523B58)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
@@ -929,6 +909,10 @@ I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\os_cfg_app.h)(0x4E39FDC6)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Bsp\LedAndKey.h)(0x5F9BA355)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bsp_oled.h)(0x5F9BA06F)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bsp_i2c.h)(0x5F9F6467)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\dht11.h)(0x5F9A5AA3)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bmp180.h)(0x5F9F9958)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\delay.h)(0x5F9F6C7F)
 F (..\..\Bsp\LedAndKey.c)(0x5F9BA383)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\ledandkey.o --omf_browse ..\..\output\ledandkey.crf --depend ..\..\output\ledandkey.d)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x.h)(0x4D783CB4)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\core_cm3.h)(0x4D523B58)
@@ -959,6 +943,128 @@ I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_wwdg.h)(0x4D783BB4)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\misc.h)(0x4D783BB4)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Bsp\LedAndKey.h)(0x5F9BA355)
+F (..\..\App\bsp_oled.c)(0x5F9B6B20)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\bsp_oled.o --omf_browse ..\..\output\bsp_oled.crf --depend ..\..\output\bsp_oled.d)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bsp_oled.h)(0x5F9BA06F)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x.h)(0x4D783CB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\core_cm3.h)(0x4D523B58)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x_conf.h)(0x59B8DD2F)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_adc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_bkp.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_can.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_cec.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_crc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dac.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dbgmcu.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dma.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_exti.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_flash.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_fsmc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_i2c.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_iwdg.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_pwr.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_rtc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_sdio.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_spi.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_tim.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_wwdg.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\misc.h)(0x4D783BB4)
+F (..\..\App\bsp_i2c.c)(0x5F9F645E)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\bsp_i2c.o --omf_browse ..\..\output\bsp_i2c.crf --depend ..\..\output\bsp_i2c.d)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bsp_i2c.h)(0x5F9F6467)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x.h)(0x4D783CB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\core_cm3.h)(0x4D523B58)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x_conf.h)(0x59B8DD2F)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_adc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_bkp.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_can.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_cec.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_crc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dac.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dbgmcu.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dma.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_exti.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_flash.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_fsmc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_i2c.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_iwdg.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_pwr.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_rtc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_sdio.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_spi.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_tim.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_wwdg.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\misc.h)(0x4D783BB4)
+F (..\..\App\delay.c)(0x5F9F6C85)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\delay.o --omf_browse ..\..\output\delay.crf --depend ..\..\output\delay.d)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\delay.h)(0x5F9F6C7F)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x.h)(0x4D783CB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\core_cm3.h)(0x4D523B58)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x_conf.h)(0x59B8DD2F)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_adc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_bkp.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_can.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_cec.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_crc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dac.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dbgmcu.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dma.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_exti.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_flash.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_fsmc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_i2c.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_iwdg.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_pwr.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_rtc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_sdio.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_spi.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_tim.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_wwdg.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\misc.h)(0x4D783BB4)
+F (..\..\App\bmp180.c)(0x5F9F9BC9)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\bmp180.o --omf_browse ..\..\output\bmp180.crf --depend ..\..\output\bmp180.d)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bmp180.h)(0x5F9F9958)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\bsp_i2c.h)(0x5F9F6467)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x.h)(0x4D783CB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\core_cm3.h)(0x4D523B58)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\CMSIS\stm32f10x_conf.h)(0x59B8DD2F)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_adc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_bkp.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_can.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_cec.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_crc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dac.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dbgmcu.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_dma.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_exti.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_flash.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_fsmc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_i2c.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_iwdg.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_pwr.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_rtc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_sdio.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_spi.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_tim.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\stm32f10x_wwdg.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\Lib\FWlib\inc\misc.h)(0x4D783BB4)
+I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\delay.h)(0x5F9F6C7F)
 F (..\..\uCOS-III\Source\os_cfg_app.c)(0x4E3668F0)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\..\App -I..\..\Bsp -I..\..\User -I..\..\uCOS-III\Source -I..\..\uCOS-III\Ports -I..\..\uCOS-III\uC-CPU -I..\..\uCOS-III\Cfg -I..\..\uCOS-III\uC-LIB -I..\..\Lib\CMSIS -I..\..\Lib\FWlib\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o ..\..\output\os_cfg_app.o --omf_browse ..\..\output\os_cfg_app.crf --depend ..\..\output\os_cfg_app.d)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\App\os_cfg_app.h)(0x4E39FDC6)
 I (C:\Users\PlanC\Documents\Github\Practical-Training-Neusoft-Tianjin\10.29\uCOS-III\Source\os.h)(0x5F991868)

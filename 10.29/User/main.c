@@ -1,7 +1,5 @@
 #include "includes.h"
-#include "dht11.h"
 #include "bmp.h"
-#include "bsp_oled.h"
 #include <stdio.h>
 
 OS_SEM  DHT11_sem;
@@ -15,8 +13,10 @@ void step_motor(void);
 
 int main(void) {
 	int i = 0;
+	int pressure = 0;
 //	OS_ERR err;	
 	BSP_Init();
+	
 //	OSInit(&err);
 //	OSSchedRoundRobinCfg(ENABLE, 1, &err);
 //	OSSemCreate(&DHT11_sem, "DHT11_SEM", 0, &err);
@@ -66,6 +66,13 @@ int main(void) {
 	OLED_DrawBMP(16, 2, 23, 3, char_M);
 	OLED_DrawBMP(24, 2, 31, 3, char_colon);
 	OLED_DrawBMP(48, 2, 55, 3, char_celsius);
+	
+	// draw "PRE:  Pa"
+	OLED_DrawBMP(0, 4, 7, 5, char_A);
+	OLED_DrawBMP(8, 4, 15, 5, char_L);
+	OLED_DrawBMP(16, 4, 23, 5, char_T);
+	OLED_DrawBMP(24, 4, 31, 5, char_colon);
+	OLED_DrawBMP(64, 4, 79, 5, char_celimeter);
 
 	// draw "0123456789"
 	for (i = 0; i < 10; i++) {
@@ -74,6 +81,7 @@ int main(void) {
 	
 	while (1) {
 		DHT_read(&DHT11_data);
+		pressure = (int)BMP180_GetAltitude();
 		
 		OLED_DrawBMP(32, 0, 39, 1, gImage_number[DHT11_data.humidity / 10]);
 		OLED_DrawBMP(40, 0, 47, 1, gImage_number[DHT11_data.humidity % 10]);
@@ -81,10 +89,15 @@ int main(void) {
 		OLED_DrawBMP(32, 2, 39, 3, gImage_number[DHT11_data.temperature / 10]);
 		OLED_DrawBMP(40, 2, 47, 3, gImage_number[DHT11_data.temperature % 10]);
 		
-		//printf("Hum: %d, Tem:%d.\n", DHT11_data.humidity, DHT11_data.temperature);
-		for (i = 0; i < 64; i++) {
+		OLED_DrawBMP(32, 4, 39, 5, gImage_number[pressure / 1000]);
+		OLED_DrawBMP(40, 4, 47, 5, gImage_number[pressure / 100 % 10]);
+		OLED_DrawBMP(48, 4, 55, 5, gImage_number[pressure / 10 % 10]);
+		OLED_DrawBMP(56, 4, 63, 5, gImage_number[pressure % 10]);
+		
+		//printf("Hum: %d, Tem:%d, ", DHT11_data.humidity, DHT11_data.temperature);
+		//printf("PRE: %d.\n", pressure);
+		if (DHT11_data.humidity > 50 || DHT11_data.temperature > 30)
 			step_motor();
-		}
 	}
 }
 
@@ -98,53 +111,56 @@ void step_motor() {
 //	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
 //	GPIO_ResetBits(GPIOA, GPIO_Pin_4);
 	
-	GPIO_SetBits(GPIOA, GPIO_Pin_1);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_2);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000);
-	
-	GPIO_SetBits(GPIOA, GPIO_Pin_1);
-	GPIO_SetBits(GPIOA, GPIO_Pin_2);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000);
-	
-	GPIO_ResetBits(GPIOA, GPIO_Pin_1);
-	GPIO_SetBits(GPIOA, GPIO_Pin_2);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000);
-	
-	GPIO_ResetBits(GPIOA, GPIO_Pin_1);
-	GPIO_SetBits(GPIOA, GPIO_Pin_2);
-	GPIO_SetBits(GPIOA, GPIO_Pin_3);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000);
-	
-	GPIO_ResetBits(GPIOA, GPIO_Pin_1);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_2);
-	GPIO_SetBits(GPIOA, GPIO_Pin_3);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000);
-	
-	GPIO_ResetBits(GPIOA, GPIO_Pin_1);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_2);
-	GPIO_SetBits(GPIOA, GPIO_Pin_3);
-	GPIO_SetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000);
-	
-	GPIO_ResetBits(GPIOA, GPIO_Pin_1);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_2);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
-	GPIO_SetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000);
-	
-	GPIO_SetBits(GPIOA, GPIO_Pin_1);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_2);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
-	GPIO_SetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000);
+	int i = 0;
+	for (i = 0; i < 64; i++) {
+		GPIO_SetBits(GPIOA, GPIO_Pin_1);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_2);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_3);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_4);
+		Delay_us(1000);
+		
+		GPIO_SetBits(GPIOA, GPIO_Pin_1);
+		GPIO_SetBits(GPIOA, GPIO_Pin_2);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_3);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_4);
+		Delay_us(1000);
+		
+		GPIO_ResetBits(GPIOA, GPIO_Pin_1);
+		GPIO_SetBits(GPIOA, GPIO_Pin_2);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_3);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_4);
+		Delay_us(1000);
+		
+		GPIO_ResetBits(GPIOA, GPIO_Pin_1);
+		GPIO_SetBits(GPIOA, GPIO_Pin_2);
+		GPIO_SetBits(GPIOA, GPIO_Pin_3);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_4);
+		Delay_us(1000);
+		
+		GPIO_ResetBits(GPIOA, GPIO_Pin_1);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_2);
+		GPIO_SetBits(GPIOA, GPIO_Pin_3);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_4);
+		Delay_us(1000);
+		
+		GPIO_ResetBits(GPIOA, GPIO_Pin_1);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_2);
+		GPIO_SetBits(GPIOA, GPIO_Pin_3);
+		GPIO_SetBits(GPIOA, GPIO_Pin_4);
+		Delay_us(1000);
+		
+		GPIO_ResetBits(GPIOA, GPIO_Pin_1);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_2);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_3);
+		GPIO_SetBits(GPIOA, GPIO_Pin_4);
+		Delay_us(1000);
+		
+		GPIO_SetBits(GPIOA, GPIO_Pin_1);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_2);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_3);
+		GPIO_SetBits(GPIOA, GPIO_Pin_4);
+		Delay_us(1000);
+	}
 }
 
 /*********************************************END OF FILE**********************/
