@@ -82,9 +82,9 @@ int main(void) {
 		OLED_DrawBMP(40, 2, 47, 3, gImage_number[DHT11_data.temperature % 10]);
 		
 		//printf("Hum: %d, Tem:%d.\n", DHT11_data.humidity, DHT11_data.temperature);
-//		for (i = 0; i < 64; i++) {
-//			step_motor();
-//		}
+		for (i = 0; i < 64; i++) {
+			step_motor();
+		}
 	}
 }
 
@@ -102,49 +102,49 @@ void step_motor() {
 	GPIO_ResetBits(GPIOA, GPIO_Pin_2);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000000);
+	Delay_us(1000);
 	
 	GPIO_SetBits(GPIOA, GPIO_Pin_1);
 	GPIO_SetBits(GPIOA, GPIO_Pin_2);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000000);
+	Delay_us(1000);
 	
 	GPIO_ResetBits(GPIOA, GPIO_Pin_1);
 	GPIO_SetBits(GPIOA, GPIO_Pin_2);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000000);
+	Delay_us(1000);
 	
 	GPIO_ResetBits(GPIOA, GPIO_Pin_1);
 	GPIO_SetBits(GPIOA, GPIO_Pin_2);
 	GPIO_SetBits(GPIOA, GPIO_Pin_3);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000000);
+	Delay_us(1000);
 	
 	GPIO_ResetBits(GPIOA, GPIO_Pin_1);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_2);
 	GPIO_SetBits(GPIOA, GPIO_Pin_3);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000000);
+	Delay_us(1000);
 	
 	GPIO_ResetBits(GPIOA, GPIO_Pin_1);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_2);
 	GPIO_SetBits(GPIOA, GPIO_Pin_3);
 	GPIO_SetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000000);
+	Delay_us(1000);
 	
 	GPIO_ResetBits(GPIOA, GPIO_Pin_1);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_2);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
 	GPIO_SetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000000);
+	Delay_us(1000);
 	
 	GPIO_SetBits(GPIOA, GPIO_Pin_1);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_2);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
 	GPIO_SetBits(GPIOA, GPIO_Pin_4);
-	Delay_us(1000000);
+	Delay_us(1000);
 }
 
 /*********************************************END OF FILE**********************/
