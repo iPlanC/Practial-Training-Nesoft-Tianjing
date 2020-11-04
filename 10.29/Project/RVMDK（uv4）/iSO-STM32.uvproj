@@ -597,6 +597,21 @@
               <FileType>1</FileType>
               <FilePath>..\..\App\bmp180.c</FilePath>
             </File>
+            <File>
+              <FileName>BH1750.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\App\BH1750.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\App\sys.c</FilePath>
+            </File>
+            <File>
+              <FileName>gy30.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\App\gy30.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

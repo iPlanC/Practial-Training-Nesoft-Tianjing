@@ -15,6 +15,9 @@ void BSP_Init(void)
 	OLED_Init();
 	Motor_Configuration();
 	I2C1_Init(I2C_STANDARD);
+//	BMP180_Init(BMP180_Normal);
+	IIC1_Configuration();
+	BH1750_Init();
 	
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	

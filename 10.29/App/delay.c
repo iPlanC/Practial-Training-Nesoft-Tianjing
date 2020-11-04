@@ -8,3 +8,9 @@ void delay_us(unsigned int us) {
 	while (timer);
 	SysTick->CTRL &= ~(1 << 0);
 }
+
+void delay_ms(unsigned int ms) {
+	while (ms--) {
+		delay_us(1000);
+	}
+}

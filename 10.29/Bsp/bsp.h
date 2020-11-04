@@ -9,6 +9,7 @@
 #include "dht11.h"
 #include "bsp_oled.h"
 #include "bmp180.h"
+#include "BH1750.h"
 
 void BSP_Init(void);
 void SysTick_init(void);
