@@ -71,7 +71,8 @@ int main(void) {
 		//printf("PRE: %d.\n", pressure);
 		
 		if (DHT11_data.humidity > 60 || DHT11_data.temperature > 30)
-			for (i = 0; i < 64; i++) step_motor();
+			//for (i = 0; i < 64; i++) 
+			step_motor();
 		if ((int)lx < 10000) {
 			GPIO_SetBits(GPIOA, GPIO_Pin_1);
 			GPIO_SetBits(GPIOA, GPIO_Pin_2);
