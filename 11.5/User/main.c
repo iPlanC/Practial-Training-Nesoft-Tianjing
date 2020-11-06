@@ -1,3 +1,8 @@
+// step motor 5v -> 5v, GND -> GND, IN1~4 -> PA1~4
+// BMP180     5v -> 5v, GND -> GND, SCL -> PB6, SDA -> PB7, 3V3 -> 3V3
+// DHT11      + -> 5v, - -> GND, OUT -> PB1
+// BH1750     5v -> 5v, GND -> GND, SCL -> PB10, SDA -> PB11, 3V3 -> 3V3
+
 #include "bsp.h"
 #include "bmp.h"
 #include <stdio.h>
