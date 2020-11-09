@@ -1,12 +1,5 @@
-#include "includes.h"
-#include "bmp.h"
+#include "bsp.h"
 #include <stdio.h>
-
-OS_SEM  DHT11_sem;
-OS_TCB  task1_TCB;
-OS_TCB  task2_TCB;
-CPU_STK	task1_Stk[128];
-CPU_STK	task2_Stk[128];
 
 DHT11_TypeDef DHT11_data;
 
@@ -15,44 +8,8 @@ void step_motor(void);
 int main(void) {
 	int i = 0;
 	float lx = 0;
-//	OS_ERR err;	
+	double altitude = 0;
 	BSP_Init();
-	
-//	OSInit(&err);
-//	OSSchedRoundRobinCfg(ENABLE, 1, &err);
-//	OSSemCreate(&DHT11_sem, "DHT11_SEM", 0, &err);
-//	
-//	printf("started!\n");
-//	
-//	OSTaskCreate((OS_TCB     *)&task1_TCB,   
-//				(CPU_CHAR   *)"Task1",
-//				(OS_TASK_PTR )Task1,
-//				(void       *)0,
-//				(OS_PRIO     )2,
-//				(CPU_STK    *)&task1_Stk[0],
-//				(CPU_STK_SIZE)12,
-//				(CPU_STK_SIZE)128,
-//				(OS_MSG_QTY  )0,
-//				(OS_TICK     )0,
-//				(void       *)0,
-//				(OS_OPT      )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
-//				(OS_ERR     *)&err);
-//	
-//	OSTaskCreate((OS_TCB     *)&task2_TCB,
-//				(CPU_CHAR   *)"Task2",
-//				(OS_TASK_PTR )Task2,
-//				(void       *)0,
-//				(OS_PRIO     )3,
-//				(CPU_STK    *)&task2_Stk[0],
-//				(CPU_STK_SIZE)12,
-//				(CPU_STK_SIZE)128,
-//				(OS_MSG_QTY  )0,
-//				(OS_TICK     )0,
-//				(void       *)0,
-//				(OS_OPT      )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
-//				(OS_ERR     *)&err);
-//	
-//	OSStart(&err);
 
 	// draw "HUM:  %"
 	OLED_DrawBMP(0, 0, 7, 1, char_H);
@@ -68,21 +25,24 @@ int main(void) {
 	OLED_DrawBMP(24, 2, 31, 3, char_colon);
 	OLED_DrawBMP(48, 2, 55, 3, char_celsius);
 
-	// draw "LMX:    lx"
+	// draw "LUX:    lx"
 	OLED_DrawBMP(0, 4, 7, 5, char_L);
 	OLED_DrawBMP(8, 4, 15, 5, char_U);
 	OLED_DrawBMP(16, 4, 23, 5, char_X);
 	OLED_DrawBMP(24, 4, 31, 5, char_colon);
 	OLED_DrawBMP(72, 4, 79, 5, char_lux);
 
-	// draw "0123456789"
-	for (i = 0; i < 10; i++) {
-		OLED_DrawBMP(i * 8, 6, i * 8 + 7, 7, gImage_number[i]);
-	}
+	// draw ""
+	OLED_DrawBMP(0, 6, 7, 7, char_A);
+	OLED_DrawBMP(8, 6, 15, 7, char_L);
+	OLED_DrawBMP(16, 6, 23, 7, char_T);
+	OLED_DrawBMP(24, 6, 31, 7, char_colon);
+	OLED_DrawBMP(64, 6, 79, 7, char_celimeter);
 	
 	while (1) {
 		DHT_read(&DHT11_data);
 		lx = LIght_Intensity();
+		altitude = BMP180_GetPressure();
 		
 		OLED_DrawBMP(32, 0, 39, 1, gImage_number[DHT11_data.humidity / 10]);
 		OLED_DrawBMP(40, 0, 47, 1, gImage_number[DHT11_data.humidity % 10]);
@@ -96,8 +56,14 @@ int main(void) {
 		OLED_DrawBMP(56, 4, 63, 5, gImage_number[(int)lx / 10 % 10]);
 		OLED_DrawBMP(64, 4, 71, 5, gImage_number[(int)lx / 1 % 10]);
 		
+		OLED_DrawBMP(32, 6, 39, 7, gImage_number[(int)altitude / 1000 % 10]);
+		OLED_DrawBMP(40, 6, 47, 7, gImage_number[(int)altitude / 100 % 10]);
+		OLED_DrawBMP(48, 6, 55, 7, gImage_number[(int)altitude / 10 % 10]);
+		OLED_DrawBMP(56, 6, 63, 7, gImage_number[(int)altitude / 1 % 10]);
+		
 		//printf("Hum: %d, Tem:%d, ", DHT11_data.humidity, DHT11_data.temperature);
 		//printf("PRE: %d.\n", pressure);
+		
 		if (DHT11_data.humidity > 60 || DHT11_data.temperature > 30)
 			for (i = 0; i < 64; i++) step_motor();
 		if ((int)lx < 10000) {
