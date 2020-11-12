@@ -10,8 +10,8 @@ int main() {
     int shmid = 0;
     pid_t pid = 0;
     char str[] = "Hello";
-    pid = fork();
     shmid = shmget(IPC_PRIVATE, 1024, IPC_CREAT);
+    pid = fork();
 
     if (pid == 0) {
         char *c_addr;
