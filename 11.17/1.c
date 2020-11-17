@@ -2,6 +2,7 @@
 #include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -23,9 +24,18 @@ int main() {
     listen(server_sock_fd, 10);
 
     while (1) {
-        printf("server is waiting for connection...\n\n");
+        printf("\nserver is waiting for connection...\n");
         client_sock_fd = accept(server_sock_fd, (struct sockaddr *)&client_addr, &sockaddr_in_size);
+
+        if (strcmp("172.17.160.49", inet_ntoa(client_addr.sin_addr)) == 0) {
+            printf("A blacklisted client connected ip: \"%s\", connection refused\n", inet_ntoa(client_addr.sin_addr));
+            send(client_sock_fd, "localhost", sizeof("localhost"), 0);
+            close(client_sock_fd);
+            continue;
+        }
+
         printf("A client connected ip: \"%s\"\n", inet_ntoa(client_addr.sin_addr));
+        close(client_sock_fd);
     }
     close(server_sock_fd);
 

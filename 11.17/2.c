@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
 
     int sockaddr_in_size = sizeof(struct sockaddr_in);
     int sock_fd = socket(AF_INET, SOCK_STREAM, 0);
+    char buffer[100] = {'\0'};
     struct sockaddr_in server_addr;
 
     server_addr.sin_family = AF_INET;
@@ -21,6 +22,8 @@ int main(int argc, char *argv[]) {
     server_addr.sin_port = htons(SERVER_PORT);
 
     connect(sock_fd, (const struct sockaddr *)&server_addr, sockaddr_in_size);
+    recv(sock_fd, buffer, sizeof(buffer), 0);
+    printf("recived: \"%s\"\n", buffer);
     close(sock_fd);
 
     return 0;
