@@ -5,6 +5,7 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <time.h>
 #include <unistd.h>
 
 #define SERVER_PORT 8800
@@ -13,6 +14,8 @@ int main() {
     int sockaddr_in_size = sizeof(struct sockaddr_in);
     int server_sock_fd = socket(AF_INET, SOCK_STREAM, 0);
     int client_sock_fd = socket(AF_INET, SOCK_STREAM, 0);
+    char buffer[100] = {'\0'};
+	time_t t;
     struct sockaddr_in server_addr;
     struct sockaddr_in client_addr;
 
@@ -33,10 +36,14 @@ int main() {
             close(client_sock_fd);
             continue;
         }
-
-        printf("A client connected ip: \"%s\"\n", inet_ntoa(client_addr.sin_addr));
-        send(client_sock_fd, "Hello", sizeof("Hello"), 0);
-        close(client_sock_fd);
+		else {
+			time(&t);
+			strftime(buffer, 100, "%Y-%m-%d %H:%M:%S", localtime(&t));
+        	printf("A client connected ip: \"%s\"\n", inet_ntoa(client_addr.sin_addr));
+        	send(client_sock_fd, buffer, sizeof(buffer), 0);
+        	printf("sent time is: \"%s\"\n", buffer);
+        	close(client_sock_fd);
+        }
     }
     close(server_sock_fd);
 
