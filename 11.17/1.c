@@ -38,8 +38,8 @@ int main() {
         }
 		else {
 			time(&t);
-			strftime(buffer, 100, "%Y-%m-%d %H:%M:%S", localtime(&t));
         	printf("A client connected ip: \"%s\"\n", inet_ntoa(client_addr.sin_addr));
+			strftime(buffer, 100, "%Y-%m-%d %H:%M:%S", localtime(&t));
         	send(client_sock_fd, buffer, sizeof(buffer), 0);
         	printf("sent time is: \"%s\"\n", buffer);
         	close(client_sock_fd);
