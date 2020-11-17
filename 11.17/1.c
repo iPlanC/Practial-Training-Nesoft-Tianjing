@@ -25,7 +25,7 @@ int main() {
     while (1) {
         printf("server is waiting for connection...\n\n");
         client_sock_fd = accept(server_sock_fd, (struct sockaddr *)&client_addr, &sockaddr_in_size);
-        printf("A client connected ip: \"%d\"\n", client_addr.sin_addr.s_addr);
+        printf("A client connected ip: \"%s\"\n", inet_ntoa(client_addr.sin_addr));
     }
     close(server_sock_fd);
 

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 #define SERVER_PORT 8800
 
@@ -20,6 +21,7 @@ int main(int argc, char *argv[]) {
     server_addr.sin_port = htons(SERVER_PORT);
 
     connect(sock_fd, (const struct sockaddr *)&server_addr, sockaddr_in_size);
+    close(sock_fd);
 
     return 0;
 }
