@@ -10,6 +10,7 @@
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         printf("usage %s <ip>\n", argv[0]);
+        exit(1);
     }
 
     int sockaddr_in_size = sizeof(struct sockaddr_in);

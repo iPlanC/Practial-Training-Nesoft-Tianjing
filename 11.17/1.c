@@ -35,6 +35,7 @@ int main() {
         }
 
         printf("A client connected ip: \"%s\"\n", inet_ntoa(client_addr.sin_addr));
+        send(client_sock_fd, "Hello", sizeof("Hello"), 0);
         close(client_sock_fd);
     }
     close(server_sock_fd);
