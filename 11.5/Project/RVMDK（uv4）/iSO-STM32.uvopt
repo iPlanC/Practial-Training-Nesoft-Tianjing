@@ -643,7 +643,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>49</TopLine>
+      <TopLine>1</TopLine>
       <CurrentLine>156</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\User\main.c</PathWithFileName>
@@ -763,8 +763,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>17</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\Bsp\delay.c</PathWithFileName>
       <FilenameWithoutPath>delay.c</FilenameWithoutPath>
@@ -779,8 +779,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>36</TopLine>
+      <CurrentLine>37</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\Bsp\dht11.c</PathWithFileName>
       <FilenameWithoutPath>dht11.c</FilenameWithoutPath>
